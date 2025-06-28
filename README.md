@@ -250,7 +250,3 @@ For support and questions:
 - Visit our community platforms
 - Check the troubleshooting section
 - Open an issue on GitHub
-
----
-
-**Built with ❤️ by Nolyx Society**
