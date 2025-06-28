@@ -36,7 +36,7 @@ export const validateRecaptchaConfig = () => {
   return true
 }
 
-// Helper function to load reCAPTCHA script
+// Helper function to load reCAPTCHA script with explicit rendering
 export const loadRecaptchaScript = () => {
   return new Promise((resolve, reject) => {
     if (window.grecaptcha) {
@@ -45,7 +45,7 @@ export const loadRecaptchaScript = () => {
     }
 
     const script = document.createElement('script')
-    script.src = 'https://www.google.com/recaptcha/api.js'
+    script.src = 'https://www.google.com/recaptcha/api.js?render=explicit'
     script.async = true
     script.defer = true
     

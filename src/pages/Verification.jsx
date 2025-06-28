@@ -9,11 +9,23 @@ const Verification = () => {
   const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
   const [error, setError] = useState('')
   const recaptchaRef = useRef(null)
+  const recaptchaWidgetId = useRef(null)
   const { createSession } = useSession()
   const navigate = useNavigate()
 
   useEffect(() => {
     initializeRecaptcha()
+    
+    // Cleanup function to reset reCAPTCHA when component unmounts
+    return () => {
+      if (window.grecaptcha && recaptchaWidgetId.current !== null) {
+        try {
+          window.grecaptcha.reset(recaptchaWidgetId.current)
+        } catch (error) {
+          console.log('reCAPTCHA cleanup error (expected on unmount):', error)
+        }
+      }
+    }
   }, [])
 
   const initializeRecaptcha = async () => {
@@ -27,9 +39,9 @@ const Verification = () => {
       // Load reCAPTCHA script
       await loadRecaptchaScript()
       
-      // Render reCAPTCHA
-      if (window.grecaptcha && recaptchaRef.current) {
-        window.grecaptcha.render(recaptchaRef.current, {
+      // Only render if not already rendered and element exists
+      if (window.grecaptcha && recaptchaRef.current && recaptchaWidgetId.current === null) {
+        recaptchaWidgetId.current = window.grecaptcha.render(recaptchaRef.current, {
           sitekey: RECAPTCHA_CONFIG.getSiteKey(),
           callback: handleRecaptchaVerify,
           'expired-callback': handleRecaptchaExpire,
@@ -39,7 +51,7 @@ const Verification = () => {
         })
         
         setRecaptchaLoaded(true)
-        console.log('✅ reCAPTCHA loaded successfully')
+        console.log('✅ reCAPTCHA loaded successfully with widget ID:', recaptchaWidgetId.current)
       }
     } catch (error) {
       console.error('❌ Failed to initialize reCAPTCHA:', error)
@@ -68,12 +80,12 @@ const Verification = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     
-    if (!window.grecaptcha) {
+    if (!window.grecaptcha || recaptchaWidgetId.current === null) {
       setError('reCAPTCHA not loaded. Please refresh the page.')
       return
     }
 
-    const response = window.grecaptcha.getResponse()
+    const response = window.grecaptcha.getResponse(recaptchaWidgetId.current)
     if (!response || response.length === 0) {
       setError('Please complete the reCAPTCHA verification')
       return
@@ -99,9 +111,9 @@ const Verification = () => {
   }
 
   const resetRecaptcha = () => {
-    if (window.grecaptcha) {
+    if (window.grecaptcha && recaptchaWidgetId.current !== null) {
       try {
-        window.grecaptcha.reset()
+        window.grecaptcha.reset(recaptchaWidgetId.current)
         setIsSubmitEnabled(false)
         setError('')
         console.log('🔄 reCAPTCHA reset')
@@ -333,7 +345,8 @@ const Verification = () => {
             <strong>Debug Info:</strong><br />
             Site Key: {RECAPTCHA_CONFIG.getSiteKey().substring(0, 20)}...<br />
             Environment: {window.location.hostname}<br />
-            reCAPTCHA Loaded: {recaptchaLoaded ? '✅' : '❌'}
+            reCAPTCHA Loaded: {recaptchaLoaded ? '✅' : '❌'}<br />
+            Widget ID: {recaptchaWidgetId.current}
           </div>
         )}
       </div>
