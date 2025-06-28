@@ -3,11 +3,11 @@
 
 export const RECAPTCHA_CONFIG = {
   // IMPORTANT: Replace this with your new site key
-  SITE_KEY: '6LfhynArAAAAAJkto7sf9CExHObip1UPOUKkdgKp', // Replace with your new key
+  SITE_KEY: '6LfhynArAAAAAJkto7sf9CExHObip1UPOUKkdgKp', // Updated with new key
   
   // Development site key (for localhost testing)
   // You can use the same key or create a separate one for development
-  DEV_SITE_KEY: '6LfhynArAAAAAJkto7sf9CExHObip1UPOUKkdgKp', // Replace with your dev key
+  DEV_SITE_KEY: '6LfhynArAAAAAJkto7sf9CExHObip1UPOUKkdgKp', // Updated with new key
   
   // Configuration options
   THEME: 'light', // 'light' or 'dark'

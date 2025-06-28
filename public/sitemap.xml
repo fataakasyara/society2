@@ -5,11 +5,15 @@
     <priority>1.00</priority>
   </url>
   <url>
-    <loc>https://nolyx.sytes.net/ai.html</loc>
+    <loc>https://nolyx.sytes.net/blog</loc>
     <priority>0.80</priority>
   </url>
   <url>
-    <loc>https://nolyx.sytes.net/bluenation.html</loc>
+    <loc>https://nolyx.sytes.net/join</loc>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://nolyx.sytes.net/ai</loc>
     <priority>0.80</priority>
   </url>
 </urlset>
