@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>reCAPTCHA Verification</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="session-manager.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: 
+          radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 80% 20%, rgba(34, 139, 34, 0.1) 0%, transparent 50%),
+          radial-gradient(circle at 40% 40%, rgba(46, 125, 50, 0.05) 0%, transparent 50%),
+          linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+      }
+
+      body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 2px,
+            rgba(46, 125, 50, 0.01) 2px,
+            rgba(46, 125, 50, 0.01) 4px
+          );
+        pointer-events: none;
+      }
+
+      .container {
+        background: 
+          linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+        padding: 50px 40px;
+        border-radius: 8px;
+        box-shadow: 
+          0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        text-align: center;
+        max-width: 420px;
+        width: 100%;
+        border: 1px solid rgba(46, 125, 50, 0.1);
+        position: relative;
+        backdrop-filter: blur(10px);
+      }
+
+      .container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #2e7d32, #4caf50, #66bb6a, #4caf50, #2e7d32);
+        border-radius: 8px 8px 0 0;
+      }
+
+      h2 {
+        color: #1b5e20;
+        margin-bottom: 35px;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.025em;
+        text-shadow: 0 1px 2px rgba(27, 94, 32, 0.1);
+      }
+
+      .form-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .g-recaptcha {
+        margin: 5px 0;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+      }
+
+      .submit-btn {
+        background: linear-gradient(145deg, #2e7d32, #388e3c);
+        color: white;
+        border: none;
+        padding: 14px 32px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 500;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 
+          0 2px 4px rgba(46, 125, 50, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        text-transform: none;
+        letter-spacing: 0.025em;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .submit-btn:disabled {
+        background: linear-gradient(145deg, #bdbdbd, #9e9e9e);
+        cursor: not-allowed;
+        opacity: 0.6;
+        box-shadow: 
+          0 1px 2px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .submit-btn:disabled:hover {
+        transform: none;
+        background: linear-gradient(145deg, #bdbdbd, #9e9e9e);
+      }
+
+      .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s;
+      }
+
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+
+      .submit-btn:hover {
+        background: linear-gradient(145deg, #1b5e20, #2e7d32);
+        box-shadow: 
+          0 4px 8px rgba(46, 125, 50, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+        box-shadow: 
+          0 1px 2px rgba(46, 125, 50, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      }
+
+      .security-badge {
+        width: 48px;
+        height: 48px;
+        background: 
+          linear-gradient(145deg, #e8f5e8, #f1f8e9);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 25px;
+        box-shadow: 
+          0 2px 4px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(46, 125, 50, 0.1);
+      }
+
+      .security-badge svg {
+        width: 24px;
+        height: 24px;
+        fill: #2e7d32;
+        filter: drop-shadow(0 1px 1px rgba(46, 125, 50, 0.2));
+      }
+
+      .info-text {
+        color: #424242;
+        font-size: 13px;
+        margin-top: 20px;
+        opacity: 0.8;
+        font-weight: 400;
+        line-height: 1.4;
+      }
+
+      .verification-step {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 20px;
+        color: #558b2f;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .step-indicator {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: linear-gradient(145deg, #c8e6c9, #a5d6a7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: 600;
+        color: #1b5e20;
+        box-shadow: inset 0 1px 2px rgba(27, 94, 32, 0.1);
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 40px 25px;
+          margin: 15px;
+        }
+        
+        h2 {
+          font-size: 20px;
+        }
+        
+        .g-recaptcha {
+          transform: scale(0.9);
+        }
+      }
+
+      /* Subtle texture overlay */
+      .container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: 
+          radial-gradient(circle at 1px 1px, rgba(46, 125, 50, 0.02) 1px, transparent 0);
+        background-size: 20px 20px;
+        border-radius: 8px;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="security-badge">
+        <svg viewBox="0 0 24 24">
+          <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11C15.4,11 16,11.4 16,12V16C16,16.6 15.6,17 15,17H9C8.4,17 8,16.6 8,16V12C8,11.4 8.4,11 9,11V10C9,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.2,9.2 10.2,10V11H13.8V10C13.8,9.2 12.8,8.2 12,8.2Z"/>
+        </svg>
+      </div>
+      
+      <div class="verification-step">
+        <div class="step-indicator">1</div>
+        <span>Security Verification</span>
+      </div>
+      
+      <h2>Verify you're human</h2>
+      
+     <form id="verificationForm" action="join.html" method="GET" class="form-wrapper">
+  <div class="g-recaptcha" data-sitekey="6LdGRm8rAAAAAJMzE_ezbOw3Cxan67FHmkY9atJG" data-callback="enableSubmit"></div>
+  <input id="submitBtn" type="submit" value="Continue" class="submit-btn" disabled>
+
+        <p class="info-text">This security check helps protect our website from automated attacks</p>
+      </form>
+    </div>
+  </body>
+  <script>
+  // Disable submit button by default
+  document.getElementById('submitBtn').disabled = true;
+  
+  // Function called when reCAPTCHA is completed
+  function enableSubmit() {
+    document.getElementById('submitBtn').disabled = false;
+    document.getElementById('submitBtn').style.opacity = '1';
+    document.getElementById('submitBtn').style.cursor = 'pointer';
+  }
+  
+  // Prevent form submission if reCAPTCHA not completed
+  document.getElementById('verificationForm').addEventListener('submit', function(e) {
+    var response = grecaptcha.getResponse();
+    if (response.length === 0) {
+      e.preventDefault();
+      alert('Please complete the reCAPTCHA verification');
+      return false;
+    } else {
+      // Prevent default form submission
+      e.preventDefault();
+
+      // Create verification session using session manager
+      createVerificationSession();
+
+      // Redirect after session is created
+      setTimeout(() => {
+        window.location.href = 'join.html';
+      }, 1000);
+
+      return false;
+    }
+  });
+
+  // Function to create verification session
+  function createVerificationSession() {
+    // Show loading state
+    const submitBtn = document.getElementById('submitBtn');
+    const originalText = submitBtn.value;
+    submitBtn.value = 'Creating Session...';
+    submitBtn.disabled = true;
+
+    // Use the session manager to create session
+    if (window.NolyxSession) {
+      window.NolyxSession.createSession();
+    } else {
+      // Fallback if session manager not loaded
+      const sessionData = {
+        verified: true,
+        timestamp: Date.now(),
+        expires: Date.now() + (24 * 60 * 60 * 1000)
+      };
+      localStorage.setItem('nolyxVerificationSession', JSON.stringify(sessionData));
+      sessionStorage.setItem('nolyxVerified', 'true');
+    }
+
+    // Show success message briefly before redirect
+    setTimeout(() => {
+      submitBtn.value = 'Verified! Redirecting...';
+      submitBtn.style.background = 'linear-gradient(145deg, #1b5e20, #2e7d32)';
+    }, 500);
+
+    console.log('Verification session created successfully');
+  }
+</script>
+</html>

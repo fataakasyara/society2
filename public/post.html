@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="pageTitle">Blog Post - Nolyx Society</title>
+    <meta name="description" id="pageDescription" content="Read the latest Web3 and blockchain insights from Nolyx Society.">
+    <meta name="keywords" content="Web3 blog, blockchain insights, technology articles, Nolyx Society">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="article">
+    <meta property="og:url" id="ogUrl" content="https://nolyx.sytes.net/post.html">
+    <meta property="og:title" id="ogTitle" content="Blog Post - Nolyx Society">
+    <meta property="og:description" id="ogDescription" content="Read the latest Web3 and blockchain insights from Nolyx Society.">
+    <meta property="og:image" id="ogImage" content="https://your-domain.com/path/to/nolyx-blog-image.jpg">
+
+    <link rel="icon" href="gambar/nolyxnew.png">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Dynamic Navbar and MetaMask Scripts -->
+    <script src="navbar.js"></script>
+    <script src="metamask.js"></script>
+    <script src="ai-button.js"></script>
+    <style>
+        /* Custom styles for blog post content */
+        .post-content h2 {
+            @apply text-2xl font-bold text-gray-800 mt-8 mb-4;
+        }
+        .post-content h3 {
+            @apply text-xl font-semibold text-gray-800 mt-6 mb-3;
+        }
+        .post-content p {
+            @apply text-gray-700 leading-relaxed mb-4;
+        }
+        .post-content ul, .post-content ol {
+            @apply text-gray-700 mb-4 pl-6;
+        }
+        .post-content li {
+            @apply mb-2;
+        }
+        .post-content ul li {
+            @apply list-disc;
+        }
+        .post-content ol li {
+            @apply list-decimal;
+        }
+        .post-content strong {
+            @apply font-semibold text-gray-800;
+        }
+        .post-content code {
+            @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono;
+        }
+        .post-content blockquote {
+            @apply border-l-4 border-green-500 pl-4 italic text-gray-600 my-4;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-green-600 to-green-800 bg-size-200 bg-pos-0 animation" style="background-size: 200% 200%; background-position: 0% 0%; animation: gradient 2s ease infinite;
+    @keyframes gradient {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 0%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }">
+    
+    <!-- Dynamic Navbar will be inserted here automatically -->
+
+    <!-- Main Content -->
+    <main class="pt-20 min-h-screen">
+        <!-- Loading State -->
+        <div id="loadingState" class="flex items-center justify-center min-h-screen">
+            <div class="text-center">
+                <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600 mx-auto mb-4"></div>
+                <p class="text-white text-lg">Loading article...</p>
+            </div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden flex items-center justify-center min-h-screen">
+            <div class="max-w-md mx-auto px-4 text-center">
+                <div class="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
+                    <div class="mb-6">
+                        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Article Not Found</h2>
+                        <p class="text-gray-600 mb-6">
+                            The article you're looking for doesn't exist or has been removed.
+                        </p>
+                    </div>
+                    
+                    <a href="blog.html" class="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-arrow-left mr-3"></i>
+                        Back to Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Post Content -->
+        <div id="postContent" class="hidden">
+            <!-- Breadcrumb -->
+            <section class="bg-white py-4 shadow-sm">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <nav class="flex items-center space-x-2 text-sm text-gray-500">
+                        <a href="blog.html" class="hover:text-green-600 transition-colors">Blog</a>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                        <span id="breadcrumbTitle" class="text-gray-800 font-medium">Article Title</span>
+                    </nav>
+                </div>
+            </section>
+
+            <!-- Article Header -->
+            <section class="bg-white py-12">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-8">
+                        <div class="mb-4">
+                            <span id="postCategory" class="bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold">Category</span>
+                        </div>
+                        <h1 id="postTitle" class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Article Title</h1>
+                        
+                        <!-- Article Meta -->
+                        <div class="flex items-center justify-center space-x-6 text-gray-600 mb-8">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar mr-2"></i>
+                                <span id="postDate">Date</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span id="postReadTime">Read Time</span>
+                            </div>
+                            <div class="flex items-center">
+                                <img id="authorAvatar" src="" alt="Author" class="w-8 h-8 rounded-full mr-2">
+                                <span id="authorName">Author</span>
+                            </div>
+                        </div>
+
+                        <!-- Featured Image -->
+                        <div class="mb-8">
+                            <img id="postImage" src="" alt="Article Image" class="w-full h-64 md:h-96 object-cover rounded-2xl shadow-lg">
+                        </div>
+
+                        <!-- Social Share -->
+                        <div class="flex items-center justify-center space-x-4 mb-8">
+                            <span class="text-gray-600 font-medium">Share:</span>
+                            <button id="shareTwitter" class="bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full transition-colors">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button id="shareLinkedIn" class="bg-blue-700 hover:bg-blue-800 text-white p-3 rounded-full transition-colors">
+                                <i class="fab fa-linkedin"></i>
+                            </button>
+                            <button id="shareFacebook" class="bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full transition-colors">
+                                <i class="fab fa-facebook"></i>
+                            </button>
+                            <button id="copyLink" class="bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-full transition-colors">
+                                <i class="fas fa-link"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Article Content -->
+            <section class="bg-white py-12">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div id="articleContent" class="post-content prose prose-lg max-w-none">
+                        <!-- Article content will be loaded here -->
+                    </div>
+
+                    <!-- Author Bio -->
+                    <div class="mt-12 p-6 bg-gray-50 rounded-2xl">
+                        <div class="flex items-start space-x-4">
+                            <img id="authorAvatarLarge" src="" alt="Author" class="w-16 h-16 rounded-full">
+                            <div>
+                                <h3 id="authorNameLarge" class="text-xl font-bold text-gray-800 mb-2">Author Name</h3>
+                                <p id="authorBio" class="text-gray-600">Author bio</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Navigation -->
+                    <div class="mt-12 flex justify-between items-center">
+                        <a href="blog.html" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl transition-colors flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Back to Blog
+                        </a>
+                        
+                        <div class="flex space-x-4">
+                            <button id="shareArticle" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-xl transition-colors flex items-center">
+                                <i class="fas fa-share mr-2"></i>
+                                Share Article
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Related Posts -->
+            <section class="bg-gray-50 py-16">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <h2 class="text-3xl font-bold text-gray-800 text-center mb-12">Related Articles</h2>
+                    <div id="relatedPosts" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Related posts will be loaded here -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Post Manager Class
+        class PostManager {
+            constructor() {
+                this.currentPost = null;
+                this.allPosts = [];
+                this.init();
+            }
+
+            async init() {
+                console.log('Initializing PostManager...');
+
+                // Wait a bit for MetaMask connector to be ready
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                await this.loadPostsData();
+                this.loadPost();
+            }
+
+            async loadPostsData() {
+                try {
+                    console.log('Loading posts data from API...');
+                    console.log('MetaMask connector available:', !!window.metaMaskConnector);
+                    console.log('MetaMask connected:', window.metaMaskConnector?.isConnected);
+
+                    // Load posts regardless of wallet connection for individual post pages
+                    // Users coming from blog.html are already authenticated
+                    const response = await fetch('https://api.jsonbin.io/v3/b/685bffd98561e97a502b9481');
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to load posts data: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('API Response structure:', Object.keys(data));
+                    console.log('API Response:', data);
+
+                    // Try different possible data structures
+                    this.allPosts = data.record?.posts || data.record || data.posts || data || [];
+                    console.log('Posts loaded successfully from API:', this.allPosts.length, 'posts');
+
+                    if (this.allPosts.length > 0) {
+                        console.log('First post sample:', this.allPosts[0]);
+                        console.log('All post IDs available:', this.allPosts.map(p => `${p.id} (${typeof p.id})`));
+                    } else {
+                        console.warn('No posts found in API response');
+                    }
+                } catch (error) {
+                    console.error('Error loading posts from API:', error);
+                    this.showError();
+                }
+            }
+
+            loadPost() {
+                console.log('Loading post...');
+                console.log('Current URL:', window.location.href);
+                console.log('Search params:', window.location.search);
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const postIdString = urlParams.get('id');
+                const postId = parseInt(postIdString);
+
+                console.log('Post ID string from URL:', postIdString);
+                console.log('Post ID parsed:', postId);
+                console.log('Available posts:', this.allPosts.length);
+                console.log('All post IDs:', this.allPosts.map(p => p.id));
+
+                if (!postId) {
+                    console.error('No valid post ID found');
+                    this.showError();
+                    return;
+                }
+
+                this.currentPost = this.allPosts.find(post => post.id === postId);
+                console.log('Found post:', !!this.currentPost);
+                console.log('Current post:', this.currentPost);
+
+                if (!this.currentPost) {
+                    console.error('Post not found with ID:', postId);
+                    this.showError();
+                    return;
+                }
+
+                console.log('Rendering post:', this.currentPost.title);
+                this.renderPost();
+                this.loadRelatedPosts();
+                this.setupEventListeners();
+            }
+
+            renderPost() {
+                // Hide loading, show content
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('postContent').classList.remove('hidden');
+
+                const post = this.currentPost;
+
+                // Update page title and meta
+                document.getElementById('pageTitle').textContent = `${post.title} - Nolyx Society`;
+                document.getElementById('pageDescription').content = post.excerpt;
+                document.getElementById('ogTitle').content = post.title;
+                document.getElementById('ogDescription').content = post.excerpt;
+                document.getElementById('ogImage').content = post.image;
+                document.getElementById('ogUrl').content = `${window.location.origin}/post.html?id=${post.id}`;
+
+                // Update breadcrumb
+                document.getElementById('breadcrumbTitle').textContent = post.title;
+
+                // Update post content
+                document.getElementById('postCategory').textContent = this.formatCategoryName(post.category);
+                document.getElementById('postTitle').textContent = post.title;
+                document.getElementById('postDate').textContent = new Date(post.date).toLocaleDateString();
+                document.getElementById('postReadTime').textContent = post.readTime;
+                document.getElementById('postImage').src = post.image;
+                document.getElementById('postImage').alt = post.title;
+
+                // Update author info
+                document.getElementById('authorAvatar').src = post.author.avatar;
+                document.getElementById('authorName').textContent = post.author.name;
+                document.getElementById('authorAvatarLarge').src = post.author.avatar;
+                document.getElementById('authorNameLarge').textContent = post.author.name;
+                document.getElementById('authorBio').textContent = post.author.bio;
+
+                // Update article content
+                document.getElementById('articleContent').innerHTML = post.content;
+            }
+
+            formatCategoryName(category) {
+                const categoryNames = {
+                    'web3': 'Web3',
+                    'blockchain': 'Blockchain',
+                    'defi': 'DeFi',
+                    'smartcontracts': 'Smart Contracts',
+                    'tutorials': 'Tutorials',
+                    'nft': 'NFT',
+                    'dao': 'DAO'
+                };
+                return categoryNames[category] || category;
+            }
+
+            loadRelatedPosts() {
+                const relatedPosts = this.allPosts
+                    .filter(post => post.id !== this.currentPost.id && post.category === this.currentPost.category)
+                    .slice(0, 3);
+
+                if (relatedPosts.length < 3) {
+                    // Fill with other posts if not enough in same category
+                    const otherPosts = this.allPosts
+                        .filter(post => post.id !== this.currentPost.id && post.category !== this.currentPost.category)
+                        .slice(0, 3 - relatedPosts.length);
+                    relatedPosts.push(...otherPosts);
+                }
+
+                this.renderRelatedPosts(relatedPosts);
+            }
+
+            renderRelatedPosts(posts) {
+                const container = document.getElementById('relatedPosts');
+                container.innerHTML = posts.map(post => `
+                    <article class="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onclick="window.location.href='post.html?id=${post.id}'">
+                        <div class="relative">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold">${this.formatCategoryName(post.category)}</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-calendar mr-2"></i>
+                                <span>${new Date(post.date).toLocaleDateString()}</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>${post.readTime}</span>
+                            </div>
+                            <h3 class="text-lg font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">${post.title}</h3>
+                            <p class="text-gray-600 text-sm">${post.excerpt.substring(0, 100)}...</p>
+                        </div>
+                    </article>
+                `).join('');
+            }
+
+            setupEventListeners() {
+                // Social sharing
+                document.getElementById('shareTwitter').addEventListener('click', () => {
+                    this.shareOnTwitter();
+                });
+
+                document.getElementById('shareLinkedIn').addEventListener('click', () => {
+                    this.shareOnLinkedIn();
+                });
+
+                document.getElementById('shareFacebook').addEventListener('click', () => {
+                    this.shareOnFacebook();
+                });
+
+                document.getElementById('copyLink').addEventListener('click', () => {
+                    this.copyLink();
+                });
+
+                document.getElementById('shareArticle').addEventListener('click', () => {
+                    this.shareArticle();
+                });
+            }
+
+            shareOnTwitter() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent(`Check out this article: ${this.currentPost.title}`);
+                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            }
+
+            shareOnLinkedIn() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
+            }
+
+            shareOnFacebook() {
+                const url = encodeURIComponent(window.location.href);
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            }
+
+            async copyLink() {
+                try {
+                    await navigator.clipboard.writeText(window.location.href);
+                    if (typeof Swal !== 'undefined') {
+                        Swal.fire({
+                            title: 'Link Copied!',
+                            text: 'Article link has been copied to clipboard',
+                            icon: 'success',
+                            timer: 2000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        alert('Link copied to clipboard!');
+                    }
+                } catch (err) {
+                    console.error('Failed to copy link:', err);
+                }
+            }
+
+            shareArticle() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: this.currentPost.title,
+                        text: this.currentPost.excerpt,
+                        url: window.location.href
+                    });
+                } else {
+                    this.copyLink();
+                }
+            }
+
+            showError() {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('errorState').classList.remove('hidden');
+            }
+        }
+
+        // Initialize post manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new PostManager();
+        });
+    </script>
+
+    <!-- Ethers.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+</body>
+</html>

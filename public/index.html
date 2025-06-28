@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nolyx Society - Web3 Community</title>
+    <meta name="description" content="Nolyx Society is a community dedicated to learning and exploring emerging technologies like Web 3.0, Blockchain, Smart Contracts, and Cryptography.Founded by Fataa Kasyara">
+    <meta name="keywords" content="Web 3.0, Blockchain, Smart Contracts, Cryptography, Technology Community, Innovation, Future Tech, Fataa Kasyara">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nolyx.sytes.net/">
+    <meta property="og:title" content="Nolyx Society - Exploring Web 3.0 and Future Technologies">
+    <meta property="og:description" content="Join our community of tech enthusiasts exploring the future of technology.">
+    <meta property="og:image" content="https://your-domain.com/path/to/nolyx-social-image.jpg">
+
+    <link rel="icon" href="gambar/nolyxnew.png">
+
+    <!-- <link href="https://unpkg.com/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <!-- <script src="https://unpkg.com/@tailwindcss/browser@4"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Dynamic Navbar and MetaMask Scripts -->
+    <script>window.noAutoNavbar = true;</script> <!-- Prevent auto-initialization since we have existing navbar -->
+    <script src="metamask.js"></script>
+    <script src="ai-button.js"></script>
+
+
+
+
+     <!-- Structured Data - Organization -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Nolyx Society",
+        "description": "A community dedicated to learning and exploring emerging technologies like Web 3.0, Blockchain, Smart Contracts, and Cryptography.",
+        "url": "https://www.nolyx.sytes.net/",
+        "logo": "gambar/nolyxnew.png",
+        "foundingDate": "2024",
+        "founders": [
+            {
+                "@type": "Person",
+                "name": "Fataa Kasyara",
+                "jobTitle": "President and Founder"
+                "url": "https://kasyara.pages.dev/",
+                "sameAs": [
+                    "https://linkedin.com/in/kasyara",
+                    "https://github.com/fataakasyara"
+                          ]
+            }
+        ]
+    }
+    </script>
+
+        <!-- Structured Data - WebSite -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Nolyx Society",
+        "url": "https://www.nolyxsociety.com/"
+    }
+    </script>
+</head>
+<body class="bg-gradient-to-r from-green-400 to-green-600 bg-size-200 bg-pos-0 animation" style="background-size: 200% 200%; background-position: 0% 0%; animation: gradient 2s ease infinite;
+    @keyframes gradient {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 0%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }">
+<nav class="fixed top-0 w-full bg-white shadow-lg z-30 mt-0 mb-16">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+            <div class="flex items-center space-x-4">
+                <img src="gambar/nolyxnew.png" alt="Nolyx" class="h-10 w-10">
+                <span id="cinzel" class="text-2xl font-bold text-green-700">Nolyx</span>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="#join" class="font-medium text-gray-700 hover:text-green-700 transition-colors">Join</a>
+                <a href="#about" class="font-medium text-gray-700 hover:text-green-700 transition-colors">About</a>
+                <a href="#governance" class="font-medium text-gray-700 hover:text-green-700 transition-colors">Governance</a>
+                <a href="blog.html" class="font-medium text-gray-700 hover:text-green-700 transition-colors">Learn</a>
+                <button id="connect" class="font-medium text-gray-700 hover:text-green-700 transition-colors">Connect Metamask</button>
+                <p id="address" class="text-sm text-gray-600">not connected</p>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="md:hidden flex items-center">
+                <button class="mobile-menu-button text-gray-700 p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu hidden md:hidden bg-white border-t">
+        <div class="px-4 py-2 space-y-3">
+            <a href="#join" class="block py-2 text-gray-700 hover:text-green-700">Join</a>
+            <a href="#about" class="block py-2 text-gray-700 hover:text-green-700">About</a>
+            <a href="#governance" class="block py-2 text-gray-700 hover:text-green-700">Governance</a>
+            <a href="blog.html" class="block py-2 text-gray-700 hover:text-green-700">Learn</a>
+            <button id="connect2" class="block text-left py-2 text-gray-700 hover:text-green-700">Connect Metamask</button>
+            <p id="address2" class="text-sm text-gray-600">not connected</p>
+        </div>
+    </div>
+</nav>
+    <section id="p" class="hero-section h-96 flex items-center justify-center text-white mt-16">
+        <div class="text-center">
+            <h1 id="cinzel" class="animate-hero text-4xl md:text-6xl font-bold mb-4">Nolyx Society</h1>
+            <br>
+            <a href="#join" class="animate-button bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full transition-colors">
+                Join Community
+            </a>
+
+        </div>
+    </section>
+
+    <section id="category" class="py-20 bg-gradient-to-b from-gray-50 to-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="animate-title text-2xl text-gray-600 mt-4 max-w-2xl mx-auto">Explore our popular <span class="font-bold text-green-700 text-3xl">Web 3.0</span> categories that are trending among our community</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="#" class="animate-card relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 green-filter">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 z-10"></div>
+                    <img src="https://cdn.coin68.com/uploads/2021/01/999x-999.gif" alt="Smart Contracts" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 flex flex-col items-center justify-end p-6 z-20">
+                        <span class="text-white text-xl font-bold mb-1">Smart Contracts</span>
+                    </div>
+                </a>
+
+                <a href="#" class="animate-card relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 green-filter">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 z-10"></div>
+                    <img src="https://cdn-icons-gif.flaticon.com/11700/11700968.gif" alt="Blockchain" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 flex flex-col items-center justify-end p-6 z-20">
+                        <span class="text-white text-xl font-bold mb-1">Blockchain</span>
+                    </div>
+                </a>
+
+                <a href="#" class="animate-card relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 green-filter">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 z-10"></div>
+                    <img src="https://cryptounity.org/wp-content/uploads/2023/04/16.gif" alt="Cryptography" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 flex flex-col items-center justify-end p-6 z-20">
+                        <span class="text-white text-xl font-bold mb-1">Cryptography</span>
+                    </div>
+                </a>
+
+                <a href="#" class="animate-card relative group overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 green-filter">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent opacity-70 z-10"></div>
+                    <img src="https://trends.vc/wp-content/uploads/2021/09/defi-optimized.gif" alt="Web 3.0" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 flex flex-col items-center justify-end p-6 z-20">
+                        <span class="text-white text-xl font-bold mb-1">Decentralized App</span>
+                    </div>
+                </a>
+            </div>
+    
+            <div class="text-center mt-12">
+            </div>
+        </div>
+    </section>
+    
+    <section id="about" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <h2 class="animate-title text-4xl font-bold text-green-900 relative">
+                    About Us
+                    <span class="absolute -bottom-2 left-0 w-20 h-1 bg-green-600"></span>
+                </h2>
+
+                <div class="hidden md:block">
+                    <div class="animate-element flex items-center space-x-2 text-sm text-green-800 font-medium">
+                        <span class="text-green-600">Nolyx Society</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16">
+                <div class="animate-content transform transition duration-500 hover:scale-105">
+                    <h3 class="text-2xl font-semibold mb-6 text-green-900 flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </span>
+                        Our Mission
+                    </h3>
+                    <p class="text-green-700 mb-6 leading-relaxed">
+                        Building a community where we can learn about future technology together.
+                    </p>
+                    <p class="text-green-700 leading-relaxed">
+                        We strive to create an environment that fosters curiosity, collaboration, and continuous learning. Through discussions, workshops, and projects, we aim to empower individuals with the knowledge and skills needed to navigate the evolving world of technology.
+                    </p>
+                </div>
+
+                <div class="animate-content transform transition duration-500 hover:scale-105">
+                    <h3 class="text-2xl font-semibold mb-6 text-green-900 flex items-center">
+                        <span class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white mr-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                            </svg>
+                        </span>
+                        Our Story
+                    </h3>
+                    <p class="text-green-700 mb-6 leading-relaxed">
+                        The journey of Nolyx Society began with a simple idea: to create a space where technology enthusiasts can come together, exchange ideas, and grow collectively. What started as a small group has now evolved into a thriving community.
+                    </p>
+                    <p class="text-green-700 leading-relaxed">
+                        Over time, we have expanded our reach, bringing in experts, learners, and innovators from different backgrounds. Our goal remains the same—to explore emerging technologies and shape the future through shared knowledge and experience.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-16">
+                <h3 class="animate-title text-2xl font-semibold mb-8 text-green-900 text-center">Our Values</h3>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="animate-card p-8 bg-green-100 rounded-xl shadow-lg transform transition duration-500 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-lg mb-3 text-green-900">Innovation</h4>
+                        <p class="text-green-700">
+                            We embrace change and constantly seek new ways to push the boundaries of technology, creativity, and knowledge.
+                        </p>
+                    </div>
+
+                    <div class="animate-card p-8 bg-green-100 rounded-xl shadow-lg transform transition duration-500 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-lg mb-3 text-green-900">Excellence</h4>
+                        <p class="text-green-700">
+                            Our commitment to quality and continuous improvement drives us to achieve the best in everything we do.
+                        </p>
+                    </div>
+
+                    <div class="animate-card p-8 bg-green-100 rounded-xl shadow-lg transform transition duration-500 hover:-translate-y-2 hover:shadow-xl">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-lg mb-3 text-green-900">Community</h4>
+                        <p class="text-green-700">
+                            We believe in the power of collaboration and knowledge-sharing, building a strong, supportive network of like-minded individuals.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+    
+
+    <section id="join" class="py-20 bg-gradient-to-r from-green-50 to-emerald-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
+            <div class="text-center mb-10">
+                <h2 class="animate-title text-4xl font-bold text-green-800 mb-4">Become a Nolixian Civilian</h2>
+                <p class="animate-content text-xl text-gray-600 max-w-3xl mx-auto">Learn and make projects together.</p>
+            </div>
+
+            <div class="flex flex-col items-center justify-center space-y-6">
+                <div class="animate-button relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
+                    <a href="join.html" class="relative bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-10 rounded-3xl shadow-xl flex items-center justify-center transform transition-all duration-300 hover:scale-105 text-2xl">
+                        <span class="mr-2">Join Now</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="animate-element flex items-center space-x-3 mt-6">
+                    <div class="flex -space-x-2">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/75.jpg" alt="User Avatar">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/women/75.jpg" alt="User Avatar">
+                        <img class="w-10 h-10 rounded-full border-2 border-white" src="https://randomuser.me/api/portraits/men/76.jpg" alt="User Avatar">
+                    </div>
+                    <p class="text-gray-600">Join with <span class="font-semibold text-green-700">180+</span> other Nolixians</p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+
+
+
+    <section id="governance" class="py-6 md:py-16 bg-gradient-to-br from-green-50 to-green-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+            <h2 class="governance-title text-xl md:text-3xl font-bold text-green-800 mb-4 md:mb-8">
+                Governance of Society
+                <span class="block h-1 w-16 md:w-20 bg-green-600 mt-1 md:mt-2"></span>
+            </h2>
+            
+            <!-- Top Officials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mb-8">
+                <!-- President Card -->
+                <div class="governance-card carddesign bg-white rounded-lg md:rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 text-center">
+                        <div class="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-2 ring-green-500 ring-opacity-50 mb-3">
+                            <img src="https://avatars.githubusercontent.com/u/140477415?v=4" alt="President" class="w-full h-full object-cover" alt="Fataa Kasyara">
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="text-md md:text-xl font-bold text-gray-800">Fataa Kasyara</h4>
+                            <p class="text-xs md:text-sm text-gray-600">President of the Nolyx Society</p>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                Founder & Visionary
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <a href="https://kasyara.pages.dev" target="_blank" class="inline-flex items-center justify-center px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs transition-colors duration-300">
+                                 Website
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vice President Card -->
+                <div class="governance-card carddesign bg-white rounded-lg md:rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 text-center">
+                        <div class="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-2 ring-green-500 ring-opacity-50 mb-3">
+                            <img src="https://media.tenor.com/lcuvD0zkFNMAAAAM/question-mark.gif" alt="Vice President" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="text-md md:text-xl font-bold text-gray-800">Contribute to post name</h4>
+                            <p class="text-xs md:text-sm text-gray-600">Vice President of the Nolyx Society</p>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                Executive Affairs
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <a href="/" target="_blank" class="inline-flex items-center justify-center px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs transition-colors duration-300">
+                                <i class="fab fa-instagram mr-1"></i> Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Government Officials Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <!-- Grand Chancellor Card -->
+                <div class="governance-card carddesign bg-white rounded-lg md:rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 text-center">
+                        <div class="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-2 ring-green-500 ring-opacity-50 mb-3">
+                            <img src="https://media.tenor.com/lcuvD0zkFNMAAAAM/question-mark.gif" alt="Grand Chancellor" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="text-md md:text-xl font-bold text-gray-800">Contribute to post name</h4>
+                            <p class="text-xs md:text-sm text-gray-600">Grand Chancellor of the Nolyx Society</p>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                Diplomatic Affairs
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <a href="#" class="inline-flex items-center justify-center px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs transition-colors duration-300" target="_blank">
+                                <i class="fab fa-linkedin mr-1"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Supreme Commander Card -->
+                <div class="governance-card carddesign bg-white rounded-lg md:rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 text-center">
+                        <div class="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-2 ring-green-500 ring-opacity-50 mb-3">
+                            <img src="https://media.tenor.com/lcuvD0zkFNMAAAAM/question-mark.gif" alt="Supreme Commander" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="text-md md:text-xl font-bold text-gray-800">Contribute to post name</h4>
+                            <p class="text-xs md:text-sm text-gray-600">Supreme Commander of the Nolyx Society</p>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                Military Affairs
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <a href="#" class="inline-flex items-center justify-center px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs transition-colors duration-300" target="_blank">
+                                <i class="fab fa-linkedin mr-1"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- High Judge Card -->
+                <div class="governance-card carddesign bg-white rounded-lg md:rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <div class="p-4 text-center">
+                        <div class="mx-auto w-20 h-20 md:w-24 md:h-24 rounded-full overflow-hidden ring-2 ring-green-500 ring-opacity-50 mb-3">
+                            <img src="https://media.tenor.com/lcuvD0zkFNMAAAAM/question-mark.gif" alt="High Judge" class="w-full h-full object-cover">
+                        </div>
+                        <div class="mb-2">
+                            <h4 class="text-md md:text-xl font-bold text-gray-800">Contribute to post name</h4>
+                            <p class="text-xs md:text-sm text-gray-600">High Judge of the Nolyx Society</p>
+                        </div>
+                        <div class="flex justify-center mb-2">
+                            <span class="px-2 py-0.5 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                                Judicial Affairs
+                            </span>
+                        </div>
+                        <div class="flex justify-center gap-2">
+                            <a href="#" class="inline-flex items-center justify-center px-3 py-1 bg-green-600 hover:bg-green-700 text-white rounded-md text-xs transition-colors duration-300" target="_blank">
+                                <i class="fab fa-linkedin mr-1"></i> LinkedIn
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gradient-to-br from-green-800 to-green-900 text-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 30px 30px;"></div>
+        </div>
+
+        <div class="relative z-10">
+            <!-- Main Footer Content -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+                <!-- Desktop Layout -->
+                <div class="hidden md:grid md:grid-cols-5 gap-8 mb-12">
+                    <!-- Brand Section -->
+                    <div class="col-span-2">
+                        <div class="flex items-center mb-6">
+                            <div class="bg-white bg-opacity-10 p-3 rounded-xl mr-4">
+                                <img src="gambar/nolyxnew.png" alt="Nolyx Logo" class="h-12 w-12 filter brightness-0 invert">
+                            </div>
+                            <div>
+                                <h3 class="text-2xl font-bold text-white">NOLYX</h3>
+                                <p class="text-green-200 text-sm">Society</p>
+                            </div>
+                        </div>
+                        <p class="text-green-100 text-sm leading-relaxed mb-6 max-w-sm">
+                            Building a community where we can learn about future technology together. Pioneering solutions for sustainable futures through Web 3.0 innovation.
+                        </p>
+                        <!-- Social Media Links -->
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-discord text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-telegram text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300 hover:scale-110">
+                                <i class="fab fa-github text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="font-bold text-white mb-6 text-lg">Quick Links</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#about" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                About Us
+                            </a></li>
+                            <li><a href="#governance" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Governance
+                            </a></li>
+                            <li><a href="join.html" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Join Community
+                            </a></li>
+                            <li><a href="ai.html" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Nolyx AI
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Technologies -->
+                    <div>
+                        <h4 class="font-bold text-white mb-6 text-lg">Technologies</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Blockchain
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Smart Contracts
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Cryptography
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                DeFi
+                            </a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h4 class="font-bold text-white mb-6 text-lg">Support</h4>
+                        <ul class="space-y-3">
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Help Center
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Documentation
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Contact Us
+                            </a></li>
+                            <li><a href="#" class="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                                <i class="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
+                                Privacy Policy
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Mobile Layout -->
+                <div class="md:hidden">
+                    <!-- Mobile Brand Section -->
+                    <div class="text-center mb-8">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="bg-white bg-opacity-10 p-3 rounded-xl mr-3">
+                                <img src="gambar/nolyxnew.png" alt="Nolyx Logo" class="h-10 w-10 filter brightness-0 invert">
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-white">NOLYX</h3>
+                                <p class="text-green-200 text-sm">Society</p>
+                            </div>
+                        </div>
+                        <p class="text-green-100 text-sm leading-relaxed mb-6">
+                            Building a community where we can learn about future technology together.
+                        </p>
+                        <!-- Mobile Social Media -->
+                        <div class="flex justify-center space-x-4 mb-8">
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300">
+                                <i class="fab fa-discord text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300">
+                                <i class="fab fa-telegram text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300">
+                                <i class="fab fa-twitter text-lg"></i>
+                            </a>
+                            <a href="#" class="bg-white bg-opacity-10 hover:bg-opacity-20 p-3 rounded-lg transition-all duration-300">
+                                <i class="fab fa-github text-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Links Grid -->
+                    <div class="grid grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h4 class="font-bold text-white mb-4 text-base">Quick Links</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#about" class="text-green-200 hover:text-white transition-colors text-sm">About Us</a></li>
+                                <li><a href="#governance" class="text-green-200 hover:text-white transition-colors text-sm">Governance</a></li>
+                                <li><a href="join.html" class="text-green-200 hover:text-white transition-colors text-sm">Join Community</a></li>
+                                <li><a href="ai.html" class="text-green-200 hover:text-white transition-colors text-sm">Nolyx AI</a></li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h4 class="font-bold text-white mb-4 text-base">Technologies</h4>
+                            <ul class="space-y-3">
+                                <li><a href="#" class="text-green-200 hover:text-white transition-colors text-sm">Blockchain</a></li>
+                                <li><a href="#" class="text-green-200 hover:text-white transition-colors text-sm">Smart Contracts</a></li>
+                                <li><a href="#" class="text-green-200 hover:text-white transition-colors text-sm">Cryptography</a></li>
+                                <li><a href="#" class="text-green-200 hover:text-white transition-colors text-sm">DeFi</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-green-700 bg-green-900 bg-opacity-50">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                        <div class="text-center md:text-left">
+                            <p class="text-green-200 text-sm">
+                                © 2025 <span class="font-semibold text-white">NOLYX Society</span>. All rights reserved.
+                            </p>
+                        </div>
+                        <div class="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
+                            <a href="#" class="text-green-200 hover:text-white transition-colors">Privacy Policy</a>
+                            <a href="#" class="text-green-200 hover:text-white transition-colors">Terms of Service</a>
+                            <a href="#" class="text-green-200 hover:text-white transition-colors">Cookie Policy</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script src="script.js"></script>
+
+
+
+
+
+    <!-- MetaMask connection is now handled by metamask.js -->
+
+    <!-- Universal Section Animation Script -->
+    <script>
+        // Intersection Observer for all section animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const section = entry.target;
+
+                    // Animate titles first
+                    const titles = section.querySelectorAll('.animate-title, .governance-title');
+                    titles.forEach((title, index) => {
+                        setTimeout(() => {
+                            title.classList.add('animate');
+                        }, index * 100);
+                    });
+
+                    // Animate hero elements
+                    const heroElements = section.querySelectorAll('.animate-hero');
+                    heroElements.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('animate');
+                        }, index * 200 + 300); // Start after titles
+                    });
+
+                    // Animate buttons
+                    const buttons = section.querySelectorAll('.animate-button');
+                    buttons.forEach((button, index) => {
+                        setTimeout(() => {
+                            button.classList.add('animate');
+                        }, index * 150 + 600); // Start after hero elements
+                    });
+
+                    // Animate content blocks
+                    const contentBlocks = section.querySelectorAll('.animate-content');
+                    contentBlocks.forEach((content, index) => {
+                        setTimeout(() => {
+                            content.classList.add('animate');
+                        }, index * 200 + 200); // Start after titles
+                    });
+
+                    // Animate cards with sequential delay
+                    const cards = section.querySelectorAll('.animate-card, .governance-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 200 + 400); // Start after content
+                    });
+
+                    // Animate other elements
+                    const elements = section.querySelectorAll('.animate-element');
+                    elements.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('animate');
+                        }, index * 150 + 300);
+                    });
+
+                    // Stop observing once animated
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Start observing when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            // Observe all main sections
+            const sections = document.querySelectorAll('#p, #category, #about, #join, #governance');
+            sections.forEach(section => {
+                if (section) {
+                    sectionObserver.observe(section);
+                }
+            });
+        });
+
+        // Fallback for browsers that don't support Intersection Observer
+        if (!window.IntersectionObserver) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const allAnimateElements = document.querySelectorAll(
+                    '.animate-title, .animate-hero, .animate-button, .animate-content, .animate-card, .animate-element, .governance-title, .governance-card'
+                );
+
+                allAnimateElements.forEach(element => {
+                    element.classList.add('animate');
+                });
+            });
+        }
+
+
+
+    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+</body>
+</html>
+
+
+

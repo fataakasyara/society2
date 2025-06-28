@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nolyx Society Blog - Web3 Insights & Technology</title>
+    <meta name="description" content="Explore the latest insights on Web3, blockchain technology, and emerging innovations from the Nolyx Society community.">
+    <meta name="keywords" content="Web3 blog, blockchain insights, technology articles, Nolyx Society, smart contracts, DeFi">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nolyx.sytes.net/blog.html">
+    <meta property="og:title" content="Nolyx Society Blog - Web3 Insights & Technology">
+    <meta property="og:description" content="Explore the latest insights on Web3, blockchain technology, and emerging innovations.">
+    <meta property="og:image" content="https://your-domain.com/path/to/nolyx-blog-image.jpg">
+
+    <link rel="icon" href="gambar/nolyxnew.png">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Dynamic Navbar and MetaMask Scripts -->
+    <script src="navbar.js"></script>
+    <script src="metamask.js"></script>
+    <script src="ai-button.js"></script>
+</head>
+<body class="bg-gradient-to-r from-green-600 to-green-800 bg-size-200 bg-pos-0 animation" style="background-size: 200% 200%; background-position: 0% 0%; animation: gradient 2s ease infinite;
+    @keyframes gradient {
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 0%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
+    }">
+    
+
+    
+        <!-- Wallet Connection Check Container -->
+        <div id="walletCheckContainer" class=" flex items-center justify-center min-h-screen">
+            <!-- Not Connected State -->
+            <div id="notConnectedState" class="hidden max-w-md mx-auto px-4 text-center">
+                <div class="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
+                    <div class="mb-6">
+                        <div class="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <img src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" alt="MetaMask" class="w-20 h-20 filter hue-rotate-60 saturate-200">
+                        </div>
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">Wallet Required</h2>
+                        <p class="text-gray-600 mb-6">
+                            You must connect your MetaMask wallet to access the Nolyx Society blog. 
+                            This ensures secure access to our exclusive Web3 content.
+                        </p>
+                    </div>
+                    
+                    <button id="connectWalletBtn" class="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105">
+                        Connect MetaMask Wallet
+                    </button>
+                    
+                    <div class="mt-4 text-sm text-gray-500">
+                        <p>Don't have MetaMask? <a href="https://metamask.io/" target="_blank" class="text-green-600 hover:text-green-700 underline">Download here</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connected State -->
+            <div id="connectedState" class="hidden w-full">
+                <!-- Welcome Header -->
+                        <section class="hero-section h-96 flex items-center justify-center text-white mt-16">
+                            <div id="cinzel"  class="text-center">
+                                <h1 id="category-title" class="text-4xl md:text-6xl font-bold mb-4">Nolyx Blog</h1>
+                            </div>
+                </section>
+
+                <!-- Blog Content Section -->
+                <section class="hero-section py-20 bg-gradient-to-br from-green-600 to-emerald-700 text-white">
+                    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <!-- Search Section -->
+                        <section class="sticky top-16 z-20 bg-white shadow-lg mb-8 rounded-lg">
+                            <div class="bg-white p-4 rounded-lg">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <!-- Search by name -->
+                                    <div class="relative">
+                                        <label for="searchName" class="block text-sm font-medium text-gray-700 mb-1">Search Articles:</label>
+                                        <input
+                                            type="text"
+                                            id="searchName"
+                                            class="w-full p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors text-gray-700"
+                                            placeholder="Search by title or content..."
+                                        >
+                                        <div class="absolute inset-y-0 right-0 top-6 pr-3 flex items-center pointer-events-none">
+                                            <i class="fas fa-search text-gray-400"></i>
+                                        </div>
+                                    </div>
+
+                                    <!-- Search by category -->
+                                    <div class="relative">
+                                        <label for="searchCategory" class="block text-sm font-medium text-gray-700 mb-1">Filter by Category:</label>
+                                        <select
+                                            id="searchCategory"
+                                            class="w-full text-gray-700 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500 transition-colors"
+                                        >
+                                            <option value="all">All Categories</option>
+                                            <option value="blockchain">Blockchain</option>
+                                            <option value="defi">DeFi</option>
+                                            <option value="smartcontracts">Smart Contracts</option>
+                                            <option value="tutorials">Tutorials</option>
+                                            <option value="nft">NFT</option>
+                                            <option value="dao">DAO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Categories -->
+                        <div class="text-center mb-16">
+                            <h2 class="animate-title text-3xl md:text-4xl font-bold text-white mb-8">
+                                Popular Categories
+                            </h2>
+                            <div class="animate-content flex flex-wrap justify-center gap-4 mb-12">
+                                <button class="category-btn bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-green-600 hover:text-white" data-category="blockchain">
+                                    Blockchain
+                                </button>
+                                <button class="category-btn bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-green-600 hover:text-white" data-category="defi">
+                                    DeFi
+                                </button>
+                                <button class="category-btn bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-green-600 hover:text-white" data-category="smartcontracts">
+                                    Smart Contracts
+                                </button>
+                                <button class="category-btn bg-gray-200 text-gray-700 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-green-600 hover:text-white" data-category="tutorials">
+                                    Tutorials
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Blog Posts Grid -->
+                        <div id="blogPosts" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <!-- Blog posts will be dynamically loaded here -->
+                        </div>
+
+                        <!-- Load More Button -->
+                        <div class="text-center mt-12">
+                            <button id="loadMoreBtn" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-xl transition-colors duration-300">
+                                Load More Articles
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+    <!-- Scripts -->
+    <script>
+        // Blog functionality
+        class BlogManager {
+            constructor() {
+                this.currentCategory = 'all';
+                this.postsPerPage = 6;
+                this.currentPage = 1;
+                this.searchQuery = '';
+                this.allPosts = [];
+                this.postsLoaded = false; // Flag to prevent multiple loading
+                this.init();
+            }
+
+            async init() {
+                this.checkWalletConnection();
+                this.setupEventListeners();
+                // loadBlogPosts will be called after wallet connection is established
+            }
+
+            async loadPostsData() {
+                try {
+                    console.log('Loading posts data from API...');
+                    const response = await fetch('https://api.jsonbin.io/v3/b/685bffd98561e97a502b9481');
+
+                    if (!response.ok) {
+                        throw new Error(`Failed to load posts data: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    console.log('API Response:', data);
+
+                    // Try different possible data structures
+                    this.allPosts = data.record?.posts || data.record || data.posts || data || [];
+                    console.log('Posts loaded successfully from API:', this.allPosts.length, 'posts');
+                    console.log('First post sample:', this.allPosts[0]);
+                } catch (error) {
+                    console.error('Error loading posts from API:', error);
+                    this.allPosts = [];
+                    this.showErrorMessage();
+                }
+            }
+
+            async checkWalletConnection() {
+                console.log('Checking wallet connection...');
+                // Wait for MetaMask connector to be ready
+                setTimeout(() => {
+                    console.log('MetaMask connector:', window.metaMaskConnector);
+                    console.log('Is connected:', window.metaMaskConnector?.isConnected);
+
+                    if (window.metaMaskConnector && window.metaMaskConnector.isConnected) {
+                        console.log('Wallet connected, showing connected state');
+                        this.showConnectedState();
+                        this.updateWelcomeMessage();
+                    } else {
+                        console.log('Wallet not connected, showing not connected state');
+                        this.showNotConnectedState();
+                    }
+                }, 500);
+
+                // Listen for connection changes
+                if (window.metaMaskConnector) {
+                    // Check periodically for connection status changes
+                    setInterval(() => {
+                        const notConnectedElement = document.getElementById('notConnectedState');
+                        const connectedElement = document.getElementById('connectedState');
+
+                        // Only change state if current state doesn't match wallet status
+                        if (window.metaMaskConnector.isConnected &&
+                            notConnectedElement && !notConnectedElement.classList.contains('hidden')) {
+                            console.log('Wallet connected, switching to connected state');
+                            this.showConnectedState();
+                            this.updateWelcomeMessage();
+                        } else if (!window.metaMaskConnector.isConnected &&
+                                   connectedElement && !connectedElement.classList.contains('hidden')) {
+                            console.log('Wallet disconnected, switching to not connected state');
+                            this.showNotConnectedState();
+                            this.postsLoaded = false; // Reset flag when wallet disconnects
+                        }
+                    }, 1000);
+                }
+            }
+
+            showNotConnectedState() {
+                console.log('Showing not connected state');
+                const notConnected = document.getElementById('notConnectedState');
+                const connected = document.getElementById('connectedState');
+
+                if (notConnected && connected) {
+                    notConnected.classList.remove('hidden');
+                    connected.classList.add('hidden');
+                    console.log('Not connected state shown');
+                } else {
+                    console.error('Could not find state elements:', { notConnected, connected });
+                }
+            }
+
+            showConnectedState() {
+                console.log('Showing connected state');
+                const notConnected = document.getElementById('notConnectedState');
+                const connected = document.getElementById('connectedState');
+
+                if (notConnected && connected) {
+                    notConnected.classList.add('hidden');
+                    connected.classList.remove('hidden');
+                    console.log('Connected state shown');
+
+                    // Load posts data only once when wallet is first connected
+                    if (!this.postsLoaded) {
+                        console.log('Loading posts for the first time...');
+                        this.postsLoaded = true;
+                        this.loadPostsData().then(() => {
+                            this.loadBlogPosts();
+                        });
+                    } else {
+                        console.log('Posts already loaded, skipping reload');
+                    }
+                } else {
+                    console.error('Could not find state elements:', { notConnected, connected });
+                }
+            }
+
+
+            setupEventListeners() {
+                // Connect wallet button
+                document.getElementById('connectWalletBtn').addEventListener('click', () => {
+                    if (window.metaMaskConnector) {
+                        window.metaMaskConnector.connect();
+                    }
+                });
+
+                // Search input
+                document.getElementById('searchName').addEventListener('input', (e) => {
+                    this.searchQuery = e.target.value.toLowerCase();
+                    this.currentPage = 1;
+                    this.loadBlogPosts();
+                });
+
+                // Category dropdown
+                document.getElementById('searchCategory').addEventListener('change', (e) => {
+                    this.switchCategory(e.target.value);
+                    this.updateCategoryButtons(document.querySelector(`[data-category="${e.target.value}"]`));
+                });
+
+                // Category buttons
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        this.switchCategory(e.target.dataset.category);
+                        this.updateCategoryButtons(e.target);
+                        // Update dropdown to match
+                        document.getElementById('searchCategory').value = e.target.dataset.category;
+                    });
+                });
+
+                // Load more button
+                document.getElementById('loadMoreBtn').addEventListener('click', () => {
+                    this.loadMorePosts();
+                });
+            }
+
+            switchCategory(category) {
+                this.currentCategory = category;
+                this.currentPage = 1;
+                this.loadBlogPosts();
+            }
+
+            updateCategoryButtons(activeBtn) {
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active', 'bg-green-600', 'text-white');
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                });
+                activeBtn.classList.add('active', 'bg-green-600', 'text-white');
+                activeBtn.classList.remove('bg-gray-200', 'text-gray-700');
+            }
+
+            loadBlogPosts() {
+                console.log('Loading blog posts...', {
+                    totalPosts: this.allPosts.length,
+                    currentCategory: this.currentCategory,
+                    searchQuery: this.searchQuery
+                });
+
+                let filteredPosts = this.allPosts;
+
+                // Filter by category
+                if (this.currentCategory !== 'all') {
+                    filteredPosts = filteredPosts.filter(post => post.category === this.currentCategory);
+                    console.log('After category filter:', filteredPosts.length, 'posts');
+                }
+
+                // Filter by search query
+                if (this.searchQuery) {
+                    filteredPosts = filteredPosts.filter(post =>
+                        post.title.toLowerCase().includes(this.searchQuery) ||
+                        post.excerpt.toLowerCase().includes(this.searchQuery) ||
+                        post.category.toLowerCase().includes(this.searchQuery)
+                    );
+                    console.log('After search filter:', filteredPosts.length, 'posts');
+                }
+
+                const postsToShow = filteredPosts.slice(0, this.postsPerPage * this.currentPage);
+                console.log('Posts to show:', postsToShow.length);
+
+                this.renderPosts(postsToShow);
+
+                // Update load more button visibility
+                const loadMoreBtn = document.getElementById('loadMoreBtn');
+                if (loadMoreBtn) {
+                    if (filteredPosts.length <= this.postsPerPage * this.currentPage) {
+                        loadMoreBtn.style.display = 'none';
+                    } else {
+                        loadMoreBtn.style.display = 'block';
+                    }
+                }
+
+                // Show no results message if needed
+                this.showNoResultsMessage(postsToShow.length === 0);
+            }
+
+            loadMorePosts() {
+                this.currentPage++;
+                this.loadBlogPosts();
+            }
+
+            showErrorMessage() {
+                const container = document.getElementById('blogPosts');
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-16 opacity-100">
+                        <div class="max-w-md mx-auto">
+                            <i class="fas fa-exclamation-triangle text-6xl text-red-400 mb-6"></i>
+                            <h3 class="text-2xl font-bold text-gray-600 mb-4">Failed to Load Posts</h3>
+                            <p class="text-gray-500 mb-6">
+                                We're having trouble loading the blog posts. Please try refreshing the page.
+                            </p>
+                            <button onclick="window.location.reload();"
+                                    class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                                Refresh Page
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderPosts(posts) {
+                console.log('Rendering posts:', posts.length, 'posts');
+                const container = document.getElementById('blogPosts');
+                console.log('Container found:', !!container);
+
+                if (!container) {
+                    console.error('blogPosts container not found!');
+                    return;
+                }
+
+                container.innerHTML = posts.map(post => `
+                    <article class="animate-card animate bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" onclick="window.location.href='post.html?id=${post.id}'">
+                        <div class="relative">
+                            <img src="${post.image}" alt="${post.title}" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize">${this.formatCategoryName(post.category)}</span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-calendar mr-2"></i>
+                                <span>${new Date(post.date).toLocaleDateString()}</span>
+                                <span class="mx-2">•</span>
+                                <i class="fas fa-clock mr-2"></i>
+                                <span>${post.readTime}</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors">${post.title}</h3>
+                            <p class="text-gray-600 mb-4">${post.excerpt}</p>
+                            <div class="text-green-600 hover:text-green-700 font-semibold flex items-center transition-colors">
+                                Read More
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </article>
+                `).join('');
+
+                // Add staggered animation delays for better visual effect
+                const cards = container.querySelectorAll('.animate-card');
+                console.log('Cards found after rendering:', cards.length);
+                cards.forEach((card, index) => {
+                    card.style.transitionDelay = `${index * 0.1}s`;
+                });
+
+                console.log('Posts rendered successfully. Container innerHTML length:', container.innerHTML.length);
+            }
+
+            formatCategoryName(category) {
+                const categoryNames = {
+                    'web3': 'Web3',
+                    'blockchain': 'Blockchain',
+                    'defi': 'DeFi',
+                    'smartcontracts': 'Smart Contracts',
+                    'tutorials': 'Tutorials',
+                    'nft': 'NFT',
+                    'dao': 'DAO'
+                };
+                return categoryNames[category] || category;
+            }
+
+            showNoResultsMessage(show) {
+                const container = document.getElementById('blogPosts');
+                if (show) {
+                    container.innerHTML = `
+                        <div class="col-span-full text-center py-16 opacity-100">
+                            <div class="max-w-md mx-auto">
+                                <i class="fas fa-search text-6xl text-gray-300 mb-6"></i>
+                                <h3 class="text-2xl font-bold text-gray-600 mb-4">No Articles Found</h3>
+                                <p class="text-gray-500 mb-6">
+                                    We couldn't find any articles matching your search criteria.
+                                    Try adjusting your search terms or browse all categories.
+                                </p>
+                                <button onclick="document.getElementById('searchName').value = ''; document.getElementById('searchCategory').value = 'all'; window.blogManager.searchQuery = ''; window.blogManager.switchCategory('all');"
+                                        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-colors">
+                                    Clear Search
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Initialize blog when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            window.blogManager = new BlogManager();
+        });
+
+        // Animation Script (same as other pages)
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const section = entry.target;
+                    
+                    const titles = section.querySelectorAll('.animate-title');
+                    titles.forEach((title, index) => {
+                        setTimeout(() => {
+                            title.classList.add('animate');
+                        }, index * 100);
+                    });
+
+                    const contentBlocks = section.querySelectorAll('.animate-content');
+                    contentBlocks.forEach((content, index) => {
+                        setTimeout(() => {
+                            content.classList.add('animate');
+                        }, index * 200 + 200);
+                    });
+
+                    const cards = section.querySelectorAll('.animate-card');
+                    cards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('animate');
+                        }, index * 200 + 400);
+                    });
+
+                    const elements = section.querySelectorAll('.animate-element');
+                    elements.forEach((element, index) => {
+                        setTimeout(() => {
+                            element.classList.add('animate');
+                        }, index * 150 + 300);
+                    });
+
+                    sectionObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                if (section) {
+                    sectionObserver.observe(section);
+                }
+            });
+        });
+    </script>
+
+    <!-- Ethers.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.8.1/dist/ethers.umd.min.js"></script>
+</body>
+</html>
