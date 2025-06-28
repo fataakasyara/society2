@@ -19,17 +19,17 @@ const Navbar = () => {
 
     if (currentPage === 'join' || currentPage === 'blog' || currentPage === 'ai' || currentPage === 'post') {
       baseItems.push(
-        { href: '/#join', text: 'Join' },
-        { href: '/#about', text: 'About' },
-        { href: '/#governance', text: 'Governance' },
-        { href: '/blog', text: 'Learn' }
+        { href: '/#join', text: 'Join', isExternal: true },
+        { href: '/#about', text: 'About', isExternal: true },
+        { href: '/#governance', text: 'Governance', isExternal: true },
+        { href: '/blog', text: 'Learn', isExternal: false }
       )
     } else {
       baseItems.push(
-        { href: '#join', text: 'Join' },
-        { href: '#about', text: 'About' },
-        { href: '#governance', text: 'Governance' },
-        { href: '/blog', text: 'Learn' }
+        { href: '#join', text: 'Join', isExternal: false },
+        { href: '#about', text: 'About', isExternal: false },
+        { href: '#governance', text: 'Governance', isExternal: false },
+        { href: '/blog', text: 'Learn', isExternal: false }
       )
     }
 
@@ -47,17 +47,30 @@ const Navbar = () => {
     return currentPage === pageName
   }
 
-  const handleLinkClick = (href) => {
+  const handleLinkClick = (href, isExternal) => {
     setIsMobileMenuOpen(false)
     
-    if (href.includes('#') && href.split('#')[0] === '' || href.split('#')[0] === location.pathname) {
-      const target = document.querySelector(href.split('#')[1] ? `#${href.split('#')[1]}` : 'body')
+    if (!isExternal && href.includes('#')) {
+      const targetId = href.split('#')[1]
+      const target = document.querySelector(`#${targetId}`)
       if (target) {
+        // Add visual feedback during navigation
+        target.style.transition = 'all 0.3s ease'
+        target.style.transform = 'scale(1.02)'
+        
         target.scrollIntoView({
           behavior: 'smooth',
           block: 'start'
         })
+        
+        // Reset visual feedback after scroll
+        setTimeout(() => {
+          target.style.transform = 'scale(1)'
+        }, 300)
       }
+    } else if (isExternal && href.includes('#')) {
+      // For external links to index.html sections
+      window.location.href = href
     }
   }
 
@@ -112,39 +125,46 @@ const Navbar = () => {
             {menuItems.map((item, index) => {
               const activeClass = isActiveLink(item.href) ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-700'
               
-              if (item.href.startsWith('#')) {
-                return (
-                  <a
-                    key={index}
-                    href={item.href}
-                    className={`font-medium ${activeClass} transition-colors`}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      handleLinkClick(item.href)
-                    }}
-                  >
-                    {item.text}
-                  </a>
-                )
-              } else {
+              if (item.isExternal || item.href.startsWith('/')) {
                 return (
                   <Link
                     key={index}
                     to={item.href}
-                    className={`font-medium ${activeClass} transition-colors`}
+                    className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group`}
                   >
                     {item.text}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
                   </Link>
+                )
+              } else {
+                return (
+                  <button
+                    key={index}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      handleLinkClick(item.href, item.isExternal)
+                    }}
+                    className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group`}
+                  >
+                    {item.text}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
+                  </button>
                 )
               }
             })}
             <button
               onClick={connect}
-              className="font-medium text-gray-700 hover:text-green-700 transition-colors"
+              className={`font-medium transition-all duration-300 hover:scale-105 ${
+                isConnected 
+                  ? 'text-green-600 font-semibold' 
+                  : 'text-gray-700 hover:text-green-700'
+              }`}
             >
               {isConnected ? 'Connected' : 'Connect Metamask'}
             </button>
-            <p className="text-sm text-gray-600">
+            <p className={`text-sm transition-colors duration-300 ${
+              isConnected ? 'text-green-600 font-medium' : 'text-gray-600'
+            }`}>
               {isConnected ? truncateAddress(currentAccount) : 'not connected'}
             </p>
           </div>
@@ -152,45 +172,44 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="mobile-menu-button text-gray-700 p-2"
+              className="mobile-menu-button text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               onClick={toggleMobileMenu}
             >
-              <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl`}></i>
+              <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-180' : ''}`}></i>
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`mobile-menu ${isMobileMenuOpen ? '' : 'hidden'} md:hidden bg-white border-t`}>
+      <div className={`mobile-menu ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} md:hidden bg-white border-t overflow-hidden transition-all duration-300 ease-in-out`}>
         <div className="px-4 py-2 space-y-3">
           {menuItems.map((item, index) => {
-            const activeClass = isActiveLink(item.href) ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-700'
+            const activeClass = isActiveLink(item.href) ? 'text-green-700 font-semibold bg-green-50' : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
             
-            if (item.href.startsWith('#')) {
-              return (
-                <a
-                  key={index}
-                  href={item.href}
-                  className={`block py-2 ${activeClass}`}
-                  onClick={(e) => {
-                    e.preventDefault()
-                    handleLinkClick(item.href)
-                  }}
-                >
-                  {item.text}
-                </a>
-              )
-            } else {
+            if (item.isExternal || item.href.startsWith('/')) {
               return (
                 <Link
                   key={index}
                   to={item.href}
-                  className={`block py-2 ${activeClass}`}
+                  className={`block py-3 px-3 rounded-lg transition-all duration-200 ${activeClass}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.text}
                 </Link>
+              )
+            } else {
+              return (
+                <button
+                  key={index}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    handleLinkClick(item.href, item.isExternal)
+                  }}
+                  className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${activeClass}`}
+                >
+                  {item.text}
+                </button>
               )
             }
           })}
@@ -199,11 +218,17 @@ const Navbar = () => {
               connect()
               setIsMobileMenuOpen(false)
             }}
-            className="block text-left py-2 text-gray-700 hover:text-green-700"
+            className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${
+              isConnected 
+                ? 'text-green-600 font-semibold bg-green-50' 
+                : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
+            }`}
           >
             {isConnected ? 'Connected' : 'Connect Metamask'}
           </button>
-          <p className="text-sm text-gray-600">
+          <p className={`text-sm py-2 px-3 ${
+            isConnected ? 'text-green-600 font-medium' : 'text-gray-600'
+          }`}>
             {isConnected ? truncateAddress(currentAccount) : 'not connected'}
           </p>
         </div>

@@ -14,6 +14,16 @@ const Blog = () => {
   const [isConnectedState, setIsConnectedState] = useState(false)
   const { isConnected } = useMetaMask()
 
+  // Popular categories for tags
+  const popularCategories = [
+    { id: 'blockchain', name: 'Blockchain', color: 'bg-blue-500 hover:bg-blue-600' },
+    { id: 'defi', name: 'DeFi', color: 'bg-purple-500 hover:bg-purple-600' },
+    { id: 'smartcontracts', name: 'Smart Contracts', color: 'bg-indigo-500 hover:bg-indigo-600' },
+    { id: 'tutorials', name: 'Tutorials', color: 'bg-green-500 hover:bg-green-600' },
+    { id: 'nft', name: 'NFT', color: 'bg-pink-500 hover:bg-pink-600' },
+    { id: 'dao', name: 'DAO', color: 'bg-yellow-500 hover:bg-yellow-600' }
+  ]
+
   useEffect(() => {
     checkWalletConnection()
   }, [isConnected])
@@ -55,10 +65,20 @@ const Blog = () => {
   const switchCategory = (category) => {
     setCurrentCategory(category)
     setCurrentPage(1)
-  }
-
-  const updateCategoryButtons = (activeCategory) => {
-    // This would be handled by React state
+    
+    // Add visual feedback for category selection
+    const categoryButtons = document.querySelectorAll('.category-tag')
+    categoryButtons.forEach(btn => {
+      btn.style.transform = 'scale(1)'
+    })
+    
+    const selectedButton = document.querySelector(`[data-category="${category}"]`)
+    if (selectedButton) {
+      selectedButton.style.transform = 'scale(1.05)'
+      setTimeout(() => {
+        selectedButton.style.transform = 'scale(1)'
+      }, 200)
+    }
   }
 
   const getFilteredPosts = () => {
@@ -168,6 +188,42 @@ const Blog = () => {
           50% { background-position: 100% 0%; }
           100% { background-position: 0% 0%; }
         }
+        
+        .category-tag {
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .category-tag:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .category-tag.active {
+          transform: scale(1.05);
+          box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+          .category-tags-container {
+            gap: 0.5rem;
+          }
+          
+          .category-tag {
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .category-tags-container {
+            gap: 0.25rem;
+          }
+          
+          .category-tag {
+            font-size: 0.75rem;
+            padding: 0.375rem 0.75rem;
+          }
+        }
       `}</style>
       
       <Navbar />
@@ -185,7 +241,7 @@ const Blog = () => {
           {/* Search Section */}
           <section className="sticky top-16 z-20 bg-white shadow-lg mb-8 rounded-lg">
             <div className="bg-white p-4 rounded-lg">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 {/* Search by name */}
                 <div className="relative">
                   <label htmlFor="searchName" className="block text-sm font-medium text-gray-700 mb-1">Search Articles:</label>
@@ -219,6 +275,41 @@ const Blog = () => {
                     <option value="nft">NFT</option>
                     <option value="dao">DAO</option>
                   </select>
+                </div>
+              </div>
+
+              {/* Popular Category Tags */}
+              <div className="border-t pt-4">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-semibold text-gray-700">Popular Categories:</h3>
+                  <span className="text-xs text-gray-500">Click to filter</span>
+                </div>
+                <div className="category-tags-container flex flex-wrap gap-2">
+                  <button
+                    onClick={() => switchCategory('all')}
+                    data-category="all"
+                    className={`category-tag px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                      currentCategory === 'all'
+                        ? 'bg-gray-800 text-white active'
+                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {popularCategories.map((category) => (
+                    <button
+                      key={category.id}
+                      onClick={() => switchCategory(category.id)}
+                      data-category={category.id}
+                      className={`category-tag px-3 py-1.5 rounded-full text-sm font-medium text-white transition-all duration-300 ${
+                        currentCategory === category.id
+                          ? `${category.color} active ring-2 ring-offset-2 ring-gray-400`
+                          : `${category.color}`
+                      }`}
+                    >
+                      {category.name}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>

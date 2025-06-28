@@ -1,10 +1,32 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AIButton from '../components/AIButton'
 import AnimationObserver from '../components/AnimationObserver'
 
 const Home = () => {
+  const navigate = useNavigate()
+
+  const handleJoinClick = (e) => {
+    e.preventDefault()
+    const target = document.querySelector('#join')
+    if (target) {
+      // Add visual feedback during navigation
+      target.style.transition = 'all 0.3s ease'
+      target.style.transform = 'scale(1.02)'
+      
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      })
+      
+      // Reset visual feedback after scroll
+      setTimeout(() => {
+        target.style.transform = 'scale(1)'
+      }, 300)
+    }
+  }
+
   return (
     <div className="bg-gradient-to-r from-green-400 to-green-600 bg-size-200 bg-pos-0 animation" style={{
       backgroundSize: '200% 200%',
@@ -26,12 +48,12 @@ const Home = () => {
         <div className="text-center">
           <h1 id="cinzel" className="animate-hero text-4xl md:text-6xl font-bold mb-4">Nolyx Society</h1>
           <br />
-          <Link 
-            to="/join" 
-            className="animate-button bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full transition-colors"
+          <button 
+            onClick={handleJoinClick}
+            className="animate-button bg-green-700 hover:bg-green-800 text-white px-8 py-3 rounded-full transition-all duration-300 hover:scale-105"
           >
             Join Community
-          </Link>
+          </button>
         </div>
       </section>
 
@@ -186,15 +208,15 @@ const Home = () => {
           <div className="flex flex-col items-center justify-center space-y-6">
             <div className="animate-button relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-emerald-500 rounded-3xl blur opacity-50 group-hover:opacity-75 transition duration-300"></div>
-              <Link 
-                to="/join" 
+              <button 
+                onClick={() => navigate('/join')}
                 className="relative bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-10 rounded-3xl shadow-xl flex items-center justify-center transform transition-all duration-300 hover:scale-105 text-2xl"
               >
                 <span className="mr-2">Join Now</span>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
-              </Link>
+              </button>
             </div>
             <div className="animate-element flex items-center space-x-3 mt-6">
               <div className="flex -space-x-2">
@@ -397,14 +419,14 @@ const Home = () => {
                     <i className="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
                     Governance
                   </a></li>
-                  <li><Link to="/join" className="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                  <li><button onClick={() => navigate('/join')} className="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
                     <i className="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
                     Join Community
-                  </Link></li>
-                  <li><Link to="/ai" className="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
+                  </button></li>
+                  <li><button onClick={() => navigate('/ai')} className="text-green-200 hover:text-white transition-colors duration-300 flex items-center group">
                     <i className="fas fa-chevron-right text-xs mr-2 group-hover:translate-x-1 transition-transform"></i>
                     Nolyx AI
-                  </Link></li>
+                  </button></li>
                 </ul>
               </div>
 
@@ -495,8 +517,8 @@ const Home = () => {
                   <ul className="space-y-3">
                     <li><a href="#about" className="text-green-200 hover:text-white transition-colors text-sm">About Us</a></li>
                     <li><a href="#governance" className="text-green-200 hover:text-white transition-colors text-sm">Governance</a></li>
-                    <li><Link to="/join" className="text-green-200 hover:text-white transition-colors text-sm">Join Community</Link></li>
-                    <li><Link to="/ai" className="text-green-200 hover:text-white transition-colors text-sm">Nolyx AI</Link></li>
+                    <li><button onClick={() => navigate('/join')} className="text-green-200 hover:text-white transition-colors text-sm text-left">Join Community</button></li>
+                    <li><button onClick={() => navigate('/ai')} className="text-green-200 hover:text-white transition-colors text-sm text-left">Nolyx AI</button></li>
                   </ul>
                 </div>
 
