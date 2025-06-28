@@ -18,7 +18,8 @@ export const RECAPTCHA_CONFIG = {
     // Check if we're in development
     const isDevelopment = window.location.hostname === 'localhost' || 
                          window.location.hostname === '127.0.0.1' ||
-                         window.location.hostname.includes('localhost')
+                         window.location.hostname.includes('localhost') ||
+                         window.location.port === '5173' // Add Vite dev server port check
     
     return isDevelopment ? RECAPTCHA_CONFIG.DEV_SITE_KEY : RECAPTCHA_CONFIG.SITE_KEY
   }

@@ -9,9 +9,10 @@
 2. **Create New Site**
    - **Label**: Enter "Nolyx Society" or any descriptive name
    - **reCAPTCHA type**: Select "reCAPTCHA v2" → "I'm not a robot" Checkbox
-   - **Domains**: Add your domains:
+   - **Domains**: Add your domains (CRITICAL - this fixes the current error):
      - `localhost` (for development)
      - `127.0.0.1` (for local testing)
+     - `localhost:5173` (for Vite dev server - IMPORTANT!)
      - `nolyx.sytes.net` (your production domain)
      - Add any other domains you'll use
    - **Accept the reCAPTCHA Terms of Service**
@@ -58,9 +59,20 @@ After getting your new site key, you'll need to update it in the verification pa
 1. **"Invalid site key"** - Check domain configuration
 2. **reCAPTCHA not loading** - Check network connectivity
 3. **Verification failing** - Ensure proper callback implementation
+4. **reCAPTCHA error on localhost:5173** - Make sure `localhost:5173` is added to your reCAPTCHA domain list
 
 ### Debug Steps:
 1. Check browser console for errors
-2. Verify domain is added to reCAPTCHA admin
+2. Verify domain is added to reCAPTCHA admin (including port numbers like :5173)
 3. Test with different browsers
 4. Check network requests in developer tools
+5. Clear browser cache after updating reCAPTCHA settings
+
+### Current Error Fix:
+If you're seeing "reCAPTCHA error:" in the console when accessing localhost:5173/verif, you need to:
+1. Go to your Google reCAPTCHA admin console
+2. Edit your site settings
+3. Add `localhost:5173` to the domains list
+4. Save the changes
+5. Clear your browser cache
+6. Refresh the page

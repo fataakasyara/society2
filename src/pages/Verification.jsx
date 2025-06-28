@@ -74,7 +74,10 @@ const Verification = () => {
   const handleRecaptchaError = (error) => {
     console.error('❌ reCAPTCHA error:', error)
     setIsSubmitEnabled(false)
-    setError('reCAPTCHA error occurred. Please try again.')
+    
+    // Provide more specific error message based on common issues
+    const currentDomain = window.location.hostname + (window.location.port ? ':' + window.location.port : '')
+    setError(`reCAPTCHA domain error. Please ensure '${currentDomain}' is added to your reCAPTCHA site key domains in Google admin console. Check the setup guide for details.`)
   }
 
   const handleSubmit = (e) => {
@@ -236,11 +239,12 @@ const Verification = () => {
           <div style={{
             background: '#f8d7da',
             color: '#721c24',
-            padding: '10px',
+            padding: '12px',
             borderRadius: '5px',
             marginBottom: '20px',
-            fontSize: '14px',
-            border: '1px solid #f5c6cb'
+            fontSize: '13px',
+            border: '1px solid #f5c6cb',
+            lineHeight: '1.4'
           }}>
             {error}
           </div>
@@ -344,7 +348,7 @@ const Verification = () => {
           }}>
             <strong>Debug Info:</strong><br />
             Site Key: {RECAPTCHA_CONFIG.getSiteKey().substring(0, 20)}...<br />
-            Environment: {window.location.hostname}<br />
+            Environment: {window.location.hostname}:{window.location.port}<br />
             reCAPTCHA Loaded: {recaptchaLoaded ? '✅' : '❌'}<br />
             Widget ID: {recaptchaWidgetId.current}
           </div>
