@@ -21,6 +21,35 @@ const AI = () => {
           height: calc(100% + 50px);
           overflow: hidden;
         }
+        
+        /* Additional CSS to hide footer elements in iframe */
+        .chatbot-container iframe::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 60px;
+          background: white;
+          z-index: 999;
+        }
+        
+        /* Try to inject CSS into iframe to hide footer */
+        .chatbot-container {
+          position: relative;
+        }
+        
+        .chatbot-container::after {
+          content: '';
+          position: absolute;
+          bottom: 80px;
+          left: 0;
+          right: 0;
+          height: 60px;
+          background: linear-gradient(to top, white 0%, white 80%, transparent 100%);
+          pointer-events: none;
+          z-index: 10;
+        }
       `}</style>
       
       <div className="page-container">
@@ -36,6 +65,53 @@ const AI = () => {
               border: 'none',
               backgroundColor: '#ffffff',
               boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+            }}
+            onLoad={(e) => {
+              // Try to inject CSS to hide footer when iframe loads
+              try {
+                const iframe = e.target;
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Create style element to hide footer
+                const style = iframeDoc.createElement('style');
+                style.textContent = `
+                  footer, .footer, #footer, 
+                  [class*="footer"], [id*="footer"],
+                  [class*="Footer"], [id*="Footer"],
+                  .chatbase-footer, .chatbot-footer,
+                  div[style*="bottom"]:last-child {
+                    display: none !important;
+                    visibility: hidden !important;
+                    height: 0 !important;
+                    overflow: hidden !important;
+                  }
+                  
+                  /* Hide powered by text */
+                  [class*="powered"], [class*="Powered"],
+                  a[href*="chatbase"], a[href*="Chatbase"] {
+                    display: none !important;
+                  }
+                  
+                  /* Adjust main container */
+                  body, html {
+                    margin: 0 !important;
+                    padding: 0 !important;
+                    overflow-x: hidden !important;
+                  }
+                  
+                  /* Hide last element if it looks like footer */
+                  body > div:last-child,
+                  #root > div:last-child {
+                    margin-bottom: 0 !important;
+                    padding-bottom: 0 !important;
+                  }
+                `;
+                
+                iframeDoc.head.appendChild(style);
+                console.log('Footer hiding CSS injected successfully');
+              } catch (error) {
+                console.log('Cannot inject CSS into iframe (CORS restriction):', error);
+              }
             }}
           />
         </div>
