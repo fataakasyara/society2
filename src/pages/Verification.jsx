@@ -1,54 +1,114 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSession } from '../contexts/SessionContext'
+import { RECAPTCHA_CONFIG, validateRecaptchaConfig, loadRecaptchaScript } from '../config/recaptcha'
 
 const Verification = () => {
   const [isSubmitEnabled, setIsSubmitEnabled] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [recaptchaLoaded, setRecaptchaLoaded] = useState(false)
+  const [error, setError] = useState('')
+  const recaptchaRef = useRef(null)
   const { createSession } = useSession()
   const navigate = useNavigate()
 
   useEffect(() => {
-    // Load reCAPTCHA
-    if (window.grecaptcha) {
-      window.grecaptcha.ready(() => {
-        console.log('reCAPTCHA is ready')
-      })
-    }
-
-    // Make enableSubmit function globally available
-    window.enableSubmit = () => {
-      setIsSubmitEnabled(true)
-    }
-
-    return () => {
-      delete window.enableSubmit
-    }
+    initializeRecaptcha()
   }, [])
+
+  const initializeRecaptcha = async () => {
+    try {
+      // Validate configuration
+      if (!validateRecaptchaConfig()) {
+        setError('reCAPTCHA configuration error. Please check the setup.')
+        return
+      }
+
+      // Load reCAPTCHA script
+      await loadRecaptchaScript()
+      
+      // Render reCAPTCHA
+      if (window.grecaptcha && recaptchaRef.current) {
+        window.grecaptcha.render(recaptchaRef.current, {
+          sitekey: RECAPTCHA_CONFIG.getSiteKey(),
+          callback: handleRecaptchaVerify,
+          'expired-callback': handleRecaptchaExpire,
+          'error-callback': handleRecaptchaError,
+          theme: RECAPTCHA_CONFIG.THEME,
+          size: RECAPTCHA_CONFIG.SIZE
+        })
+        
+        setRecaptchaLoaded(true)
+        console.log('✅ reCAPTCHA loaded successfully')
+      }
+    } catch (error) {
+      console.error('❌ Failed to initialize reCAPTCHA:', error)
+      setError('Failed to load reCAPTCHA. Please refresh the page.')
+    }
+  }
+
+  const handleRecaptchaVerify = (token) => {
+    console.log('✅ reCAPTCHA verified:', token.substring(0, 20) + '...')
+    setIsSubmitEnabled(true)
+    setError('')
+  }
+
+  const handleRecaptchaExpire = () => {
+    console.log('⚠️ reCAPTCHA expired')
+    setIsSubmitEnabled(false)
+    setError('reCAPTCHA expired. Please verify again.')
+  }
+
+  const handleRecaptchaError = (error) => {
+    console.error('❌ reCAPTCHA error:', error)
+    setIsSubmitEnabled(false)
+    setError('reCAPTCHA error occurred. Please try again.')
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     
     if (!window.grecaptcha) {
-      alert('reCAPTCHA not loaded. Please refresh the page.')
+      setError('reCAPTCHA not loaded. Please refresh the page.')
       return
     }
 
     const response = window.grecaptcha.getResponse()
-    if (response.length === 0) {
-      alert('Please complete the reCAPTCHA verification')
+    if (!response || response.length === 0) {
+      setError('Please complete the reCAPTCHA verification')
       return
     }
 
     setIsSubmitting(true)
+    setError('')
 
     // Create verification session
-    createSession()
+    try {
+      createSession()
+      console.log('✅ Verification session created')
+      
+      // Show success message briefly before redirect
+      setTimeout(() => {
+        navigate('/join')
+      }, 1000)
+    } catch (error) {
+      console.error('❌ Failed to create session:', error)
+      setError('Failed to create verification session. Please try again.')
+      setIsSubmitting(false)
+    }
+  }
 
-    // Show success message briefly before redirect
-    setTimeout(() => {
-      navigate('/join')
-    }, 1000)
+  const resetRecaptcha = () => {
+    if (window.grecaptcha) {
+      try {
+        window.grecaptcha.reset()
+        setIsSubmitEnabled(false)
+        setError('')
+        console.log('🔄 reCAPTCHA reset')
+      } catch (error) {
+        console.error('❌ Failed to reset reCAPTCHA:', error)
+      }
+    }
   }
 
   return (
@@ -70,25 +130,6 @@ const Verification = () => {
       padding: '20px',
       position: 'relative'
     }}>
-      <style>{`
-        body::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 2px,
-            rgba(46, 125, 50, 0.01) 2px,
-            rgba(46, 125, 50, 0.01) 4px
-          );
-          pointer-events: none;
-        }
-      `}</style>
-
       <div style={{
         background: 'linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%)',
         padding: '50px 40px',
@@ -105,6 +146,7 @@ const Verification = () => {
         position: 'relative',
         backdropFilter: 'blur(10px)'
       }}>
+        {/* Header decoration */}
         <div style={{
           content: '',
           position: 'absolute',
@@ -116,6 +158,7 @@ const Verification = () => {
           borderRadius: '8px 8px 0 0'
         }}></div>
 
+        {/* Security badge */}
         <div style={{
           width: '48px',
           height: '48px',
@@ -131,11 +174,12 @@ const Verification = () => {
           `,
           border: '1px solid rgba(46, 125, 50, 0.1)'
         }}>
-          <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', fill: '#2e7d32', filter: 'drop-shadow(0 1px 1px rgba(46, 125, 50, 0.2))' }}>
+          <svg viewBox="0 0 24 24" style={{ width: '24px', height: '24px', fill: '#2e7d32' }}>
             <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11C15.4,11 16,11.4 16,12V16C16,16.6 15.6,17 15,17H9C8.4,17 8,16.6 8,16V12C8,11.4 8.4,11 9,11V10C9,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.2,9.2 10.2,10V11H13.8V10C13.8,9.2 12.8,8.2 12,8.2Z"/>
           </svg>
         </div>
         
+        {/* Step indicator */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
@@ -174,6 +218,36 @@ const Verification = () => {
         }}>
           Verify you're human
         </h2>
+
+        {/* Error message */}
+        {error && (
+          <div style={{
+            background: '#f8d7da',
+            color: '#721c24',
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '20px',
+            fontSize: '14px',
+            border: '1px solid #f5c6cb'
+          }}>
+            {error}
+          </div>
+        )}
+
+        {/* Configuration warning */}
+        {!validateRecaptchaConfig() && (
+          <div style={{
+            background: '#fff3cd',
+            color: '#856404',
+            padding: '10px',
+            borderRadius: '5px',
+            marginBottom: '20px',
+            fontSize: '12px',
+            border: '1px solid #ffeaa7'
+          }}>
+            ⚠️ Using default reCAPTCHA key. Please update with your own site key.
+          </div>
+        )}
         
         <form onSubmit={handleSubmit} style={{
           display: 'flex',
@@ -181,47 +255,63 @@ const Verification = () => {
           alignItems: 'center',
           gap: '30px'
         }}>
-          <div 
-            className="g-recaptcha" 
-            data-sitekey="6LdGRm8rAAAAAJMzE_ezbOw3Cxan67FHmkY9atJG" 
-            data-callback="enableSubmit"
-            style={{
-              margin: '5px 0',
-              filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1))'
-            }}
-          />
+          {/* reCAPTCHA container */}
+          <div style={{ minHeight: '78px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {!recaptchaLoaded && !error && (
+              <div style={{ color: '#666', fontSize: '14px' }}>
+                Loading reCAPTCHA...
+              </div>
+            )}
+            <div ref={recaptchaRef} />
+          </div>
           
-          <input 
-            type="submit" 
-            value={isSubmitting ? 'Verified! Redirecting...' : 'Continue'}
-            disabled={!isSubmitEnabled || isSubmitting}
-            style={{
-              background: isSubmitEnabled && !isSubmitting 
-                ? 'linear-gradient(145deg, #2e7d32, #388e3c)' 
-                : 'linear-gradient(145deg, #bdbdbd, #9e9e9e)',
-              color: 'white',
-              border: 'none',
-              padding: '14px 32px',
-              borderRadius: '6px',
-              cursor: isSubmitEnabled && !isSubmitting ? 'pointer' : 'not-allowed',
-              fontSize: '15px',
-              fontWeight: '500',
-              transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
-              boxShadow: isSubmitEnabled && !isSubmitting
-                ? '0 2px 4px rgba(46, 125, 50, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
-                : '0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
-              textTransform: 'none',
-              letterSpacing: '0.025em',
-              position: 'relative',
-              overflow: 'hidden',
-              opacity: isSubmitEnabled && !isSubmitting ? '1' : '0.6'
-            }}
-          />
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <input 
+              type="submit" 
+              value={isSubmitting ? 'Verified! Redirecting...' : 'Continue'}
+              disabled={!isSubmitEnabled || isSubmitting}
+              style={{
+                background: isSubmitEnabled && !isSubmitting 
+                  ? 'linear-gradient(145deg, #2e7d32, #388e3c)' 
+                  : 'linear-gradient(145deg, #bdbdbd, #9e9e9e)',
+                color: 'white',
+                border: 'none',
+                padding: '14px 32px',
+                borderRadius: '6px',
+                cursor: isSubmitEnabled && !isSubmitting ? 'pointer' : 'not-allowed',
+                fontSize: '15px',
+                fontWeight: '500',
+                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                textTransform: 'none',
+                letterSpacing: '0.025em',
+                opacity: isSubmitEnabled && !isSubmitting ? '1' : '0.6'
+              }}
+            />
+            
+            {recaptchaLoaded && (
+              <button 
+                type="button"
+                onClick={resetRecaptcha}
+                style={{
+                  background: 'linear-gradient(145deg, #757575, #616161)',
+                  color: 'white',
+                  border: 'none',
+                  padding: '14px 20px',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '15px',
+                  fontWeight: '500',
+                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
+                }}
+              >
+                Reset
+              </button>
+            )}
+          </div>
 
           <p style={{
             color: '#424242',
             fontSize: '13px',
-            marginTop: '20px',
             opacity: '0.8',
             fontWeight: '400',
             lineHeight: '1.4'
@@ -229,6 +319,23 @@ const Verification = () => {
             This security check helps protect our website from automated attacks
           </p>
         </form>
+
+        {/* Debug info (only in development) */}
+        {process.env.NODE_ENV === 'development' && (
+          <div style={{
+            marginTop: '20px',
+            padding: '10px',
+            background: '#f0f0f0',
+            borderRadius: '5px',
+            fontSize: '12px',
+            color: '#666'
+          }}>
+            <strong>Debug Info:</strong><br />
+            Site Key: {RECAPTCHA_CONFIG.getSiteKey().substring(0, 20)}...<br />
+            Environment: {window.location.hostname}<br />
+            reCAPTCHA Loaded: {recaptchaLoaded ? '✅' : '❌'}
+          </div>
+        )}
       </div>
     </div>
   )
