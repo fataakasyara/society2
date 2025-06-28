@@ -15,11 +15,35 @@ const AI = () => {
           100% { background-position: 0% 0%; }
         }
         
-        /* Hide iframe footer using CSS */
+        /* Hide Chatbase footer completely */
         .chatbot-container iframe {
-          margin-bottom: -50px;
-          height: calc(100% + 50px);
+          margin-bottom: -80px;
+          height: calc(100% + 80px);
           overflow: hidden;
+        }
+        
+        /* Additional CSS to hide any footer elements that might show */
+        iframe[src*="chatbase"] {
+          margin-bottom: -100px !important;
+          height: calc(100vh - 60px) !important;
+        }
+        
+        /* Hide any footer content within iframe using CSS injection */
+        .chatbot-container {
+          position: relative;
+          overflow: hidden;
+        }
+        
+        .chatbot-container::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 80px;
+          background: white;
+          z-index: 10;
+          pointer-events: none;
         }
       `}</style>
       
@@ -35,7 +59,8 @@ const AI = () => {
               height: 'calc(100vh - 80px)',
               border: 'none',
               backgroundColor: '#ffffff',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)'
+              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.08)',
+              marginBottom: '-80px'
             }}
           />
         </div>
