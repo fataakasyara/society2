@@ -38,7 +38,7 @@ const Home = () => {
       <section id="category" className="py-20 bg-gradient-to-b from-gray-50 to-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <span className="animate-title text-2xl text-gray-600 mt-4 max-w-2xl mx-auto">
+            <span className="animate-title text-2xl text-gray-600 mt-4 max-w-2xl mx-auto block">
               Explore our popular <span className="font-bold text-green-700 text-3xl">Web 3.0</span> categories that are trending among our community
             </span>
           </div>
