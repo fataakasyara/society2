@@ -148,13 +148,13 @@ const Blog = () => {
           <div className="max-w-md mx-auto px-4 text-center">
             <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
               <div className="mb-6">
-                <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                <div className="flex items-center justify-center mx-auto mb-4">
                   <img 
                     src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
                     alt="MetaMask Fox" 
-                    className="w-10 h-10"
+                    className="w-16 h-16"
                     style={{
-                      filter: 'hue-rotate(20deg) saturate(1.2) brightness(0.9)'
+                      filter: 'hue-rotate(60deg) saturate(200%)'
                     }}
                   />
                 </div>
