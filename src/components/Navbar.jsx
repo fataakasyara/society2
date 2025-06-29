@@ -11,7 +11,9 @@ const Navbar = () => {
 
   const getCurrentPage = () => {
     const path = location.pathname
-    return path === '/' ? 'index' : path.slice(1)
+    if (path === '/') return 'index'
+    if (path.startsWith('/post/')) return 'post'
+    return path.slice(1)
   }
 
   const currentPage = getCurrentPage()
@@ -107,14 +109,14 @@ const Navbar = () => {
           text: 'About', 
           isExternal: true, 
           sectionId: 'about',
-          action: 'scroll-to-section'
+          action: 'navigate-to-home-section'
         },
         { 
           href: '/#governance', 
           text: 'Governance', 
           isExternal: true, 
           sectionId: 'governance',
-          action: 'scroll-to-section'
+          action: 'navigate-to-home-section'
         },
         { 
           href: '/blog', 
@@ -192,15 +194,10 @@ const Navbar = () => {
         navigate(href)
         break
 
-      case 'scroll-to-section':
+      case 'navigate-to-home-section':
         // Navigate to homepage and scroll to section
-        if (currentPage !== 'index') {
-          // Store the target section for after navigation
-          sessionStorage.setItem('scrollToSection', sectionId)
-          navigate('/')
-        } else {
-          scrollToSection(sectionId)
-        }
+        sessionStorage.setItem('scrollToSection', sectionId)
+        navigate('/')
         break
 
       case 'scroll-internal':
