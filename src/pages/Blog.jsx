@@ -149,11 +149,14 @@ const Blog = () => {
             <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
               <div className="mb-6">
                 <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#059669" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-                    <circle cx="12" cy="16" r="1"/>
-                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
-                  </svg>
+                  <img 
+                    src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
+                    alt="MetaMask Fox" 
+                    className="w-10 h-10"
+                    style={{
+                      filter: 'brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(2000%) hue-rotate(120deg) brightness(90%) contrast(120%)'
+                    }}
+                  />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Wallet Required</h2>
                 <p className="text-gray-600 mb-6 leading-relaxed">
@@ -165,9 +168,14 @@ const Blog = () => {
                 onClick={connect}
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105 group"
               >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" className="mr-3 group-hover:scale-110 transition-transform">
-                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                </svg>
+                <img 
+                  src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
+                  alt="MetaMask" 
+                  className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform"
+                  style={{
+                    filter: 'brightness(0) saturate(100%) invert(100%)'
+                  }}
+                />
                 Connect MetaMask Wallet
               </button>
               
