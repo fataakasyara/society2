@@ -5,6 +5,7 @@ import AIButton from '../components/AIButton'
 import ModernSearchBar from '../components/ModernSearchBar'
 import CategorySidebar from '../components/CategorySidebar'
 import { useMetaMask } from '../contexts/MetaMaskContext'
+import { createFullSlug } from '../utils/slugUtils'
 
 const Blog = () => {
   const [currentCategory, setCurrentCategory] = useState('all')
@@ -266,7 +267,7 @@ const Blog = () => {
                     <article
                       key={post.id}
                       className="animate-card animate bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
-                      onClick={() => window.location.href = `/post?id=${post.id}`}
+                      onClick={() => window.location.href = `/post/${createFullSlug(post.title, post.id)}`}
                       style={{ transitionDelay: `${index * 0.1}s` }}
                     >
                       <div className="relative overflow-hidden">

@@ -22,6 +22,9 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/blog" element={<Blog />} />
+              {/* New SEO-friendly route with slug parameter */}
+              <Route path="/post/:slug" element={<Post />} />
+              {/* Legacy route for backward compatibility */}
               <Route path="/post" element={<Post />} />
               <Route path="/join" element={<Join />} />
               <Route path="/ai" element={<AI />} />

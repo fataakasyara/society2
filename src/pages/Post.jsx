@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AIButton from '../components/AIButton'
+import { extractIdFromSlug, createFullSlug, generateMetaTitle, generateMetaDescription } from '../utils/slugUtils'
 
 const Post = () => {
-  const [searchParams] = useSearchParams()
+  const { slug } = useParams()
+  const navigate = useNavigate()
   const [currentPost, setCurrentPost] = useState(null)
   const [allPosts, setAllPosts] = useState([])
   const [relatedPosts, setRelatedPosts] = useState([])
@@ -21,7 +23,7 @@ const Post = () => {
     if (allPosts.length > 0) {
       loadPost()
     }
-  }, [allPosts, searchParams])
+  }, [allPosts, slug])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -61,13 +63,13 @@ const Post = () => {
   }
 
   const loadPost = () => {
-    const postIdString = searchParams.get('id')
-    const postId = parseInt(postIdString)
-
-    console.log('Post ID from URL:', postIdString, 'Parsed:', postId)
+    // Extract ID from slug
+    const postId = extractIdFromSlug(slug)
+    
+    console.log('Slug from URL:', slug, 'Extracted ID:', postId)
 
     if (!postId) {
-      console.error('No valid post ID found')
+      console.error('No valid post ID found in slug:', slug)
       setError(true)
       setLoading(false)
       return
@@ -83,12 +85,60 @@ const Post = () => {
       return
     }
 
+    // Check if current URL matches the correct slug format
+    const correctSlug = createFullSlug(post.title, post.id)
+    if (slug !== correctSlug) {
+      // Redirect to correct URL for SEO
+      console.log('Redirecting to correct slug:', correctSlug)
+      navigate(`/post/${correctSlug}`, { replace: true })
+      return
+    }
+
     setCurrentPost(post)
     loadRelatedPosts(post)
     setLoading(false)
 
-    // Update page title and meta
-    document.title = `${post.title} - Nolyx Society`
+    // Update page title and meta for SEO
+    document.title = generateMetaTitle(post.title)
+    
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]')
+    if (metaDescription) {
+      metaDescription.setAttribute('content', generateMetaDescription(post.excerpt))
+    } else {
+      const newMetaDescription = document.createElement('meta')
+      newMetaDescription.name = 'description'
+      newMetaDescription.content = generateMetaDescription(post.excerpt)
+      document.head.appendChild(newMetaDescription)
+    }
+
+    // Update Open Graph meta tags
+    updateOpenGraphMeta(post)
+  }
+
+  const updateOpenGraphMeta = (post) => {
+    const ogTags = [
+      { property: 'og:title', content: post.title },
+      { property: 'og:description', content: generateMetaDescription(post.excerpt) },
+      { property: 'og:image', content: post.image },
+      { property: 'og:url', content: window.location.href },
+      { property: 'og:type', content: 'article' },
+      { property: 'article:author', content: post.author.name },
+      { property: 'article:published_time', content: post.date },
+      { property: 'article:section', content: post.category }
+    ]
+
+    ogTags.forEach(({ property, content }) => {
+      let metaTag = document.querySelector(`meta[property="${property}"]`)
+      if (metaTag) {
+        metaTag.setAttribute('content', content)
+      } else {
+        metaTag = document.createElement('meta')
+        metaTag.setAttribute('property', property)
+        metaTag.setAttribute('content', content)
+        document.head.appendChild(metaTag)
+      }
+    })
   }
 
   const loadRelatedPosts = (post) => {
@@ -169,6 +219,44 @@ const Post = () => {
     }
   }
 
+  // Generate structured data for SEO
+  const generateStructuredData = () => {
+    if (!currentPost) return null
+
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": currentPost.title,
+      "description": currentPost.excerpt,
+      "image": currentPost.image,
+      "author": {
+        "@type": "Person",
+        "name": currentPost.author.name
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Nolyx Society",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://nolyx.sytes.net/gambar/nolyxnew.png"
+        }
+      },
+      "datePublished": currentPost.date,
+      "dateModified": currentPost.date,
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": window.location.href
+      }
+    }
+
+    return (
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+    )
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -230,6 +318,9 @@ const Post = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Structured Data for SEO */}
+      {generateStructuredData()}
+      
       <Navbar />
       
       {/* Reading Progress Bar */}
@@ -547,7 +638,7 @@ const Post = () => {
                 <article 
                   key={post.id}
                   className="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer border border-gray-100" 
-                  onClick={() => window.location.href = `/post?id=${post.id}`}
+                  onClick={() => window.location.href = `/post/${createFullSlug(post.title, post.id)}`}
                 >
                   <div className="relative overflow-hidden">
                     <img 
