@@ -4,6 +4,7 @@ import { useMetaMask } from '../contexts/MetaMaskContext'
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
   const { isConnected, currentAccount, connect, truncateAddress } = useMetaMask()
   const location = useLocation()
 
@@ -14,37 +15,85 @@ const Navbar = () => {
 
   const currentPage = getCurrentPage()
 
+  // Track active section on homepage
+  useEffect(() => {
+    if (currentPage === 'index') {
+      const handleScroll = () => {
+        const sections = ['join', 'about', 'governance']
+        const scrollPosition = window.scrollY + 100 // Offset for navbar height
+
+        let currentActiveSection = ''
+
+        sections.forEach(sectionId => {
+          const element = document.getElementById(sectionId)
+          if (element) {
+            const { offsetTop, offsetHeight } = element
+            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+              currentActiveSection = sectionId
+            }
+          }
+        })
+
+        // If we're at the very top, no section should be active
+        if (window.scrollY < 200) {
+          currentActiveSection = ''
+        }
+
+        setActiveSection(currentActiveSection)
+      }
+
+      // Initial check
+      handleScroll()
+
+      // Add scroll listener
+      window.addEventListener('scroll', handleScroll)
+      
+      return () => {
+        window.removeEventListener('scroll', handleScroll)
+      }
+    } else {
+      // Reset active section when not on homepage
+      setActiveSection('')
+    }
+  }, [currentPage])
+
   const getMenuItems = () => {
     const baseItems = []
 
     if (currentPage === 'join' || currentPage === 'blog' || currentPage === 'ai' || currentPage === 'post') {
       baseItems.push(
-        { href: '/#join', text: 'Join', isExternal: true },
-        { href: '/#about', text: 'About', isExternal: true },
-        { href: '/#governance', text: 'Governance', isExternal: true },
-        { href: '/blog', text: 'Learn', isExternal: false }
+        { href: '/#join', text: 'Join', isExternal: true, sectionId: 'join' },
+        { href: '/#about', text: 'About', isExternal: true, sectionId: 'about' },
+        { href: '/#governance', text: 'Governance', isExternal: true, sectionId: 'governance' },
+        { href: '/blog', text: 'Learn', isExternal: false, sectionId: 'blog' }
       )
     } else {
       baseItems.push(
-        { href: '#join', text: 'Join', isExternal: false },
-        { href: '#about', text: 'About', isExternal: false },
-        { href: '#governance', text: 'Governance', isExternal: false },
-        { href: '/blog', text: 'Learn', isExternal: false }
+        { href: '#join', text: 'Join', isExternal: false, sectionId: 'join' },
+        { href: '#about', text: 'About', isExternal: false, sectionId: 'about' },
+        { href: '#governance', text: 'Governance', isExternal: false, sectionId: 'governance' },
+        { href: '/blog', text: 'Learn', isExternal: false, sectionId: 'blog' }
       )
     }
 
     return baseItems
   }
 
-  const isActiveLink = (href) => {
-    if (href.includes('#')) {
-      const [page] = href.split('#')
-      const pageName = page.replace('/', '') || 'index'
-      return currentPage === pageName || (currentPage === 'index' && pageName === 'index')
+  const isActiveLink = (item) => {
+    // For external pages (blog, ai, join, post)
+    if (currentPage !== 'index') {
+      if (item.sectionId === 'blog' && currentPage === 'blog') return true
+      if (item.sectionId === 'blog' && currentPage === 'post') return true
+      return false
     }
 
-    const pageName = href.replace('/', '')
-    return currentPage === pageName
+    // For homepage sections
+    if (currentPage === 'index') {
+      // Only highlight if we're actually in that section
+      return activeSection === item.sectionId
+    }
+
+    return false
   }
 
   const handleLinkClick = (href, isExternal) => {
@@ -123,7 +172,8 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-6">
             {menuItems.map((item, index) => {
-              const activeClass = isActiveLink(item.href) ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-700'
+              const isActive = isActiveLink(item)
+              const activeClass = isActive ? 'text-green-700 font-semibold' : 'text-gray-700 hover:text-green-700'
               
               if (item.isExternal || item.href.startsWith('/')) {
                 return (
@@ -133,7 +183,9 @@ const Navbar = () => {
                     className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group`}
                   >
                     {item.text}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
+                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-600 transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}></span>
                   </Link>
                 )
               } else {
@@ -147,7 +199,9 @@ const Navbar = () => {
                     className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group`}
                   >
                     {item.text}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-green-600 transition-all duration-300 group-hover:w-full"></span>
+                    <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-600 transition-all duration-300 ${
+                      isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                    }`}></span>
                   </button>
                 )
               }
@@ -185,7 +239,8 @@ const Navbar = () => {
       <div className={`mobile-menu ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'} md:hidden bg-white border-t overflow-hidden transition-all duration-300 ease-in-out`}>
         <div className="px-4 py-2 space-y-3">
           {menuItems.map((item, index) => {
-            const activeClass = isActiveLink(item.href) ? 'text-green-700 font-semibold bg-green-50' : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
+            const isActive = isActiveLink(item)
+            const activeClass = isActive ? 'text-green-700 font-semibold bg-green-50' : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
             
             if (item.isExternal || item.href.startsWith('/')) {
               return (
