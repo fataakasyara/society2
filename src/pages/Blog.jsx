@@ -197,18 +197,8 @@ const Blog = () => {
       
       <Navbar />
       
-      {/* Welcome Header - Now seamlessly integrated with main background */}
-      <section className="pt-20 pb-12 flex items-center justify-center text-white">
-        <div id="cinzel" className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">Nolyx Blog</h1>
-          <p className="text-xl md:text-2xl text-green-100 max-w-2xl mx-auto">
-            Discover the future of Web3 technology
-          </p>
-        </div>
-      </section>
-
-      {/* Blog Content Section - Unified background */}
-      <section className="pb-20 text-white">
+      {/* Blog Content Section - Starts directly after navbar */}
+      <section className="pt-20 pb-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search Section */}
           <div className="mb-12">
