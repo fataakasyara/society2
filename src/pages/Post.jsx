@@ -44,7 +44,8 @@ const Post = () => {
   const loadPostsData = async () => {
     try {
       console.log('Loading posts data from API...')
-      const response = await fetch('https://api.jsonbin.io/v3/b/685bffd98561e97a502b9481')
+      // Updated API URL
+      const response = await fetch('https://api.jsonbin.io/v3/b/6860da6b8a456b7966b7bfb0')
 
       if (!response.ok) {
         throw new Error(`Failed to load posts data: ${response.status}`)
@@ -220,6 +221,51 @@ const Post = () => {
     
     // Fallback to copy link
     await copyLink()
+  }
+
+  // Function to render content from sections
+  const renderContent = (sections) => {
+    if (!sections || !Array.isArray(sections)) {
+      return <p>Content not available</p>
+    }
+
+    return sections.map((section, index) => (
+      <div key={index} className="mb-8">
+        <h2 className="text-2xl font-bold text-gray-800 mt-8 mb-4">{section.heading}</h2>
+        
+        {/* Regular content */}
+        {section.content && (
+          <p className="text-gray-700 leading-relaxed mb-4">{section.content}</p>
+        )}
+        
+        {/* Bullet points */}
+        {section.bullets && (
+          <ul className="text-gray-700 mb-4 pl-6">
+            {section.bullets.map((bullet, bulletIndex) => (
+              <li key={bulletIndex} className="list-disc mb-2">{bullet}</li>
+            ))}
+          </ul>
+        )}
+        
+        {/* Points (similar to bullets but different key) */}
+        {section.points && (
+          <ul className="text-gray-700 mb-4 pl-6">
+            {section.points.map((point, pointIndex) => (
+              <li key={pointIndex} className="list-disc mb-2">{point}</li>
+            ))}
+          </ul>
+        )}
+        
+        {/* Steps (numbered list) */}
+        {section.steps && (
+          <ol className="text-gray-700 mb-4 pl-6">
+            {section.steps.map((step, stepIndex) => (
+              <li key={stepIndex} className="list-decimal mb-2">{step}</li>
+            ))}
+          </ol>
+        )}
+      </div>
+    ))
   }
 
   // Generate structured data for SEO
@@ -429,10 +475,9 @@ const Post = () => {
               {/* Main Content */}
               <article className="lg:col-span-8 article-content">
                 <div className="prose prose-lg prose-green max-w-none">
-                  <div 
-                    className="post-content"
-                    dangerouslySetInnerHTML={{ __html: currentPost.content }}
-                  />
+                  <div className="post-content">
+                    {renderContent(currentPost.sections)}
+                  </div>
                 </div>
 
                 {/* Author Bio */}
