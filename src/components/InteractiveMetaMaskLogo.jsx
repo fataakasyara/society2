@@ -24,10 +24,8 @@ const InteractiveMetaMaskLogo = ({
 
         if (!containerRef.current) return
 
-        // Clear any existing content safely
-        while (containerRef.current.firstChild) {
-          containerRef.current.removeChild(containerRef.current.firstChild)
-        }
+        // Clear any existing content
+        containerRef.current.innerHTML = ''
 
         // Create MetaMask logo viewer
         viewer = MetaMaskLogo({
@@ -70,21 +68,9 @@ const InteractiveMetaMaskLogo = ({
           console.warn('Warning during MetaMask logo cleanup:', err)
         }
       }
-      
-      // Robust cleanup: clear all children from container
       if (containerRef.current) {
-        try {
-          // Remove all children safely
-          while (containerRef.current.firstChild) {
-            containerRef.current.removeChild(containerRef.current.firstChild)
-          }
-        } catch (err) {
-          console.warn('Warning during DOM cleanup:', err)
-        }
+        containerRef.current.innerHTML = ''
       }
-      
-      // Reset refs
-      viewerRef.current = null
     }
   }, [width, height, followMouse, slowDrift])
 
