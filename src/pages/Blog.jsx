@@ -154,7 +154,7 @@ const Blog = () => {
                     alt="MetaMask Fox" 
                     className="w-10 h-10"
                     style={{
-                      filter: 'brightness(0) saturate(100%) invert(20%) sepia(100%) saturate(2000%) hue-rotate(120deg) brightness(90%) contrast(120%)'
+                      filter: 'hue-rotate(20deg) saturate(1.2) brightness(0.9)'
                     }}
                   />
                 </div>
