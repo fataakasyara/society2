@@ -2,12 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 
 const ModernSearchBar = ({ 
   onSearch, 
-  onCategoryChange, 
-  currentCategory = 'all',
   placeholder = "Search articles, topics, or keywords...",
   suggestions = [],
-  showVoiceSearch = true,
-  showFilters = true
+  showVoiceSearch = true
 }) => {
   const [searchValue, setSearchValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
@@ -55,7 +52,7 @@ const ModernSearchBar = ({
         .filter(suggestion => 
           suggestion.toLowerCase().includes(searchValue.toLowerCase())
         )
-        .slice(0, 5)
+        .slice(0, 6)
       setFilteredSuggestions(filtered)
       setShowSuggestions(filtered.length > 0 && isFocused)
     } else {
@@ -121,17 +118,12 @@ const ModernSearchBar = ({
       setShowSuggestions(false)
       searchInputRef.current?.blur()
     }
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      onSearch(searchValue)
+      setShowSuggestions(false)
+    }
   }
-
-  const categories = [
-    { id: 'all', name: 'All Categories', icon: 'fas fa-th-large' },
-    { id: 'blockchain', name: 'Blockchain', icon: 'fas fa-link' },
-    { id: 'defi', name: 'DeFi', icon: 'fas fa-coins' },
-    { id: 'smartcontracts', name: 'Smart Contracts', icon: 'fas fa-file-contract' },
-    { id: 'tutorials', name: 'Tutorials', icon: 'fas fa-graduation-cap' },
-    { id: 'nft', name: 'NFT', icon: 'fas fa-image' },
-    { id: 'dao', name: 'DAO', icon: 'fas fa-users' }
-  ]
 
   return (
     <div className="modern-search-container">
@@ -225,7 +217,7 @@ const ModernSearchBar = ({
         {showSuggestions && (
           <div ref={suggestionsRef} className="suggestions-dropdown">
             <div className="suggestions-header">
-              <span className="suggestions-title">Suggestions</span>
+              <span className="suggestions-title">Popular Searches</span>
             </div>
             <div className="suggestions-list">
               {filteredSuggestions.map((suggestion, index) => (
@@ -246,28 +238,6 @@ const ModernSearchBar = ({
           </div>
         )}
       </div>
-
-      {/* Category Filters */}
-      {showFilters && (
-        <div className="category-filters">
-          <div className="filters-header">
-            <span className="filters-title">Categories</span>
-          </div>
-          <div className="filters-grid">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => onCategoryChange(category.id)}
-                className={`category-filter ${currentCategory === category.id ? 'active' : ''}`}
-                type="button"
-              >
-                <i className={`${category.icon} category-icon`}></i>
-                <span className="category-name">{category.name}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Voice Search Indicator */}
       {isListening && (

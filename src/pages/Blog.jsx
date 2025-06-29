@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AIButton from '../components/AIButton'
 import ModernSearchBar from '../components/ModernSearchBar'
+import CategorySidebar from '../components/CategorySidebar'
 import { useMetaMask } from '../contexts/MetaMaskContext'
 
 const Blog = () => {
@@ -208,17 +209,14 @@ const Blog = () => {
 
       {/* Blog Content Section */}
       <section className="py-20 bg-gradient-to-br from-green-600 to-emerald-700 text-white">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Modern Search Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Search Section */}
           <div className="mb-12">
             <ModernSearchBar
               onSearch={handleSearch}
-              onCategoryChange={handleCategoryChange}
-              currentCategory={currentCategory}
               suggestions={searchSuggestions}
               placeholder="Search articles, topics, or keywords..."
               showVoiceSearch={true}
-              showFilters={true}
             />
           </div>
 
@@ -253,95 +251,107 @@ const Blog = () => {
             </div>
           )}
 
-          {/* Blog Posts Grid */}
-          <div id="blogPosts" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {postsToShow.length > 0 ? (
-              postsToShow.map((post, index) => (
-                <article
-                  key={post.id}
-                  className="animate-card animate bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
-                  onClick={() => window.location.href = `/post?id=${post.id}`}
-                  style={{ transitionDelay: `${index * 0.1}s` }}
-                >
-                  <div className="relative overflow-hidden">
-                    <img 
-                      src={post.image} 
-                      alt={post.title} 
-                      className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize shadow-lg">
-                        {formatCategoryName(post.category)}
-                      </span>
+          {/* Main Content Layout with Sidebar */}
+          <div className="blog-layout">
+            {/* Category Sidebar */}
+            <CategorySidebar
+              currentCategory={currentCategory}
+              onCategoryChange={handleCategoryChange}
+            />
+
+            {/* Blog Posts Content */}
+            <div className="blog-content">
+              {/* Blog Posts Grid */}
+              <div id="blogPosts" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
+                {postsToShow.length > 0 ? (
+                  postsToShow.map((post, index) => (
+                    <article
+                      key={post.id}
+                      className="animate-card animate bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 cursor-pointer group"
+                      onClick={() => window.location.href = `/post?id=${post.id}`}
+                      style={{ transitionDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="relative overflow-hidden">
+                        <img 
+                          src={post.image} 
+                          alt={post.title} 
+                          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" 
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div className="absolute top-4 left-4">
+                          <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize shadow-lg">
+                            {formatCategoryName(post.category)}
+                          </span>
+                        </div>
+                      </div>
+                      <div className="p-6">
+                        <div className="flex items-center text-sm text-gray-500 mb-3">
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                          </svg>
+                          <span>{new Date(post.date).toLocaleDateString()}</span>
+                          <span className="mx-2">•</span>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12,6 12,12 16,14"/>
+                          </svg>
+                          <span>{post.readTime}</span>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors group-hover:text-green-600">
+                          {post.title}
+                        </h3>
+                        <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
+                        <div className="text-green-600 hover:text-green-700 font-semibold flex items-center transition-colors group-hover:translate-x-1">
+                          Read More
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-2">
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                            <polyline points="12,5 19,12 12,19"/>
+                          </svg>
+                        </div>
+                      </div>
+                    </article>
+                  ))
+                ) : (
+                  <div className="col-span-full text-center py-16 opacity-100">
+                    <div className="max-w-md mx-auto">
+                      <div className="w-24 h-24 bg-white bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                          <circle cx="11" cy="11" r="8"/>
+                          <path d="m21 21-4.35-4.35"/>
+                        </svg>
+                      </div>
+                      <h3 className="text-2xl font-bold text-white mb-4">No Articles Found</h3>
+                      <p className="text-green-100 mb-6">
+                        We couldn't find any articles matching your search criteria.
+                        Try adjusting your search terms or browse all categories.
+                      </p>
+                      <button
+                        onClick={clearSearch}
+                        className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-lg transition-colors"
+                      >
+                        Clear Search
+                      </button>
                     </div>
                   </div>
-                  <div className="p-6">
-                    <div className="flex items-center text-sm text-gray-500 mb-3">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
-                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
-                        <line x1="16" y1="2" x2="16" y2="6"/>
-                        <line x1="8" y1="2" x2="8" y2="6"/>
-                        <line x1="3" y1="10" x2="21" y2="10"/>
-                      </svg>
-                      <span>{new Date(post.date).toLocaleDateString()}</span>
-                      <span className="mx-2">•</span>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
-                        <circle cx="12" cy="12" r="10"/>
-                        <polyline points="12,6 12,12 16,14"/>
-                      </svg>
-                      <span>{post.readTime}</span>
-                    </div>
-                    <h3 className="text-xl font-bold text-gray-800 mb-3 hover:text-green-600 transition-colors group-hover:text-green-600">
-                      {post.title}
-                    </h3>
-                    <p className="text-gray-600 mb-4 line-clamp-3">{post.excerpt}</p>
-                    <div className="text-green-600 hover:text-green-700 font-semibold flex items-center transition-colors group-hover:translate-x-1">
-                      Read More
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-2">
-                        <line x1="5" y1="12" x2="19" y2="12"/>
-                        <polyline points="12,5 19,12 12,19"/>
-                      </svg>
-                    </div>
-                  </div>
-                </article>
-              ))
-            ) : (
-              <div className="col-span-full text-center py-16 opacity-100">
-                <div className="max-w-md mx-auto">
-                  <div className="w-24 h-24 bg-white bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                      <circle cx="11" cy="11" r="8"/>
-                      <path d="m21 21-4.35-4.35"/>
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl font-bold text-white mb-4">No Articles Found</h3>
-                  <p className="text-green-100 mb-6">
-                    We couldn't find any articles matching your search criteria.
-                    Try adjusting your search terms or browse all categories.
-                  </p>
+                )}
+              </div>
+
+              {/* Load More Button */}
+              {hasMorePosts && (
+                <div className="text-center mt-12">
                   <button
-                    onClick={clearSearch}
-                    className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-6 rounded-lg transition-colors"
+                    onClick={loadMorePosts}
+                    className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-8 rounded-xl transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
-                    Clear Search
+                    Load More Articles
                   </button>
                 </div>
-              </div>
-            )}
-          </div>
-
-          {/* Load More Button */}
-          {hasMorePosts && (
-            <div className="text-center mt-12">
-              <button
-                onClick={loadMorePosts}
-                className="bg-white hover:bg-gray-100 text-green-600 font-bold py-3 px-8 rounded-xl transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-              >
-                Load More Articles
-              </button>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </section>
 
