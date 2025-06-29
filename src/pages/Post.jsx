@@ -241,8 +241,13 @@ const Post = () => {
           0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
           50% { box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); }
         }
+        @keyframes progressPulse {
+          0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+          50% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.6); }
+        }
         .float-animation { animation: float 6s ease-in-out infinite; }
         .glow-effect { animation: glow 3s ease-in-out infinite; }
+        .progress-pulse { animation: progressPulse 2s ease-in-out infinite; }
         .gradient-text {
           background: linear-gradient(135deg, #059669, #0d9488, #0891b2);
           -webkit-background-clip: text;
@@ -312,12 +317,76 @@ const Post = () => {
         <div className="absolute bottom-20 right-10 w-28 h-28 bg-emerald-100 rounded-full blur-3xl float-animation opacity-30" style={{ animationDelay: '1s' }}></div>
       </div>
 
-      {/* Reading Progress Bar */}
-      <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
+      {/* Reading Progress Bar - Enhanced */}
+      <div className="fixed top-0 left-0 w-full h-2 bg-gray-200/80 backdrop-blur-sm z-50 border-b border-gray-300/50">
         <div 
-          className="h-full bg-gradient-to-r from-green-500 to-emerald-500 transition-all duration-300 ease-out"
+          className="h-full bg-gradient-to-r from-green-500 via-emerald-500 to-teal-500 transition-all duration-300 ease-out progress-pulse relative overflow-hidden"
           style={{ width: `${readingProgress}%` }}
-        ></div>
+        >
+          {/* Animated shine effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-pulse"></div>
+          
+          {/* Progress indicator dot */}
+          {readingProgress > 0 && (
+            <div className="absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-1/2">
+              <div className="w-4 h-4 bg-white rounded-full shadow-lg border-2 border-green-500 animate-pulse"></div>
+            </div>
+          )}
+        </div>
+        
+        {/* Progress percentage indicator */}
+        {readingProgress > 5 && (
+          <div 
+            className="absolute top-3 bg-green-600 text-white text-xs px-2 py-1 rounded-full shadow-lg transition-all duration-300"
+            style={{ left: `${Math.min(readingProgress, 95)}%`, transform: 'translateX(-50%)' }}
+          >
+            {Math.round(readingProgress)}%
+          </div>
+        )}
+      </div>
+
+      {/* Fixed Reading Progress Indicator - Bottom */}
+      <div className="fixed bottom-6 right-6 z-40">
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-4 shadow-xl border border-gray-200/50">
+          <div className="flex items-center space-x-3">
+            <div className="relative w-12 h-12">
+              <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="#e5e7eb"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  fill="none"
+                  stroke="url(#progressGradient)"
+                  strokeWidth="2"
+                  strokeDasharray={`${readingProgress}, 100`}
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#10b981" />
+                    <stop offset="50%" stopColor="#059669" />
+                    <stop offset="100%" stopColor="#047857" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+              </div>
+            </div>
+            <div className="text-sm">
+              <div className="font-semibold text-gray-800">{Math.round(readingProgress)}% Read</div>
+              <div className="text-gray-600 text-xs">
+                {readingProgress < 100 ? 'Keep reading...' : 'Article complete!'}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       
       <Navbar />
