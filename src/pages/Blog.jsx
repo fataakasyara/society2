@@ -12,7 +12,7 @@ const Blog = () => {
   const [allPosts, setAllPosts] = useState([])
   const [postsLoaded, setPostsLoaded] = useState(false)
   const [isConnectedState, setIsConnectedState] = useState(false)
-  const { isConnected } = useMetaMask()
+  const { isConnected, connect } = useMetaMask()
 
   // Popular categories for tags
   const popularCategories = [
@@ -160,9 +160,10 @@ const Blog = () => {
               </div>
               
               <button 
-                onClick={() => window.metaMaskConnector?.connect()}
+                onClick={connect}
                 className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105"
               >
+                <i className="fab fa-ethereum mr-3 text-xl"></i>
                 Connect MetaMask Wallet
               </button>
               
