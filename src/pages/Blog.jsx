@@ -275,7 +275,7 @@ const Blog = () => {
                           alt={post.title} 
                           className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" 
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        {/* Removed the overlay that was covering the image on hover */}
                         <div className="absolute top-4 left-4">
                           <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize shadow-lg">
                             {formatCategoryName(post.category)}
