@@ -182,7 +182,7 @@ const Blog = () => {
   }
 
   return (
-    <div className="bg-gradient-to-r from-green-600 to-green-800 bg-size-200 bg-pos-0 animation" style={{
+    <div className="bg-gradient-to-r from-green-600 to-green-800 bg-size-200 bg-pos-0 animation min-h-screen" style={{
       backgroundSize: '200% 200%',
       backgroundPosition: '0% 0%',
       animation: 'gradient 2s ease infinite'
@@ -197,8 +197,8 @@ const Blog = () => {
       
       <Navbar />
       
-      {/* Welcome Header */}
-      <section className="hero-section h-96 flex items-center justify-center text-white mt-16">
+      {/* Welcome Header - Now seamlessly integrated with main background */}
+      <section className="pt-20 pb-12 flex items-center justify-center text-white">
         <div id="cinzel" className="text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">Nolyx Blog</h1>
           <p className="text-xl md:text-2xl text-green-100 max-w-2xl mx-auto">
@@ -207,8 +207,8 @@ const Blog = () => {
         </div>
       </section>
 
-      {/* Blog Content Section */}
-      <section className="py-20 bg-gradient-to-br from-green-600 to-emerald-700 text-white">
+      {/* Blog Content Section - Unified background */}
+      <section className="pb-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search Section */}
           <div className="mb-12">
