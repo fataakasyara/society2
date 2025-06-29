@@ -71,12 +71,12 @@ const InteractiveMetaMaskLogo = ({
         }
       }
       
-      // Safe cleanup of DOM elements
-      if (containerRef.current && viewerRef.current && viewerRef.current.container) {
+      // Robust cleanup: clear all children from container
+      if (containerRef.current) {
         try {
-          // Only remove if the container is still a child of the parent
-          if (containerRef.current.contains(viewerRef.current.container)) {
-            containerRef.current.removeChild(viewerRef.current.container)
+          // Remove all children safely
+          while (containerRef.current.firstChild) {
+            containerRef.current.removeChild(containerRef.current.firstChild)
           }
         } catch (err) {
           console.warn('Warning during DOM cleanup:', err)
