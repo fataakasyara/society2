@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar'
 import AIButton from '../components/AIButton'
 import ModernSearchBar from '../components/ModernSearchBar'
 import CategorySidebar from '../components/CategorySidebar'
-import InteractiveMetaMaskLogo from '../components/InteractiveMetaMaskLogo'
 import { useMetaMask } from '../contexts/MetaMaskContext'
 
 const Blog = () => {
@@ -150,12 +149,13 @@ const Blog = () => {
             <div className="bg-white rounded-2xl shadow-2xl p-8 border border-gray-200">
               <div className="mb-6">
                 <div className="flex items-center justify-center mx-auto mb-4">
-                  <InteractiveMetaMaskLogo 
-                    width={80}
-                    height={80}
-                    followMouse={true}
-                    slowDrift={false}
-                    className="hover:scale-110 transition-transform duration-300"
+                  <img 
+                    src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
+                    alt="MetaMask Fox" 
+                    className="w-16 h-16"
+                    style={{
+                      filter: 'hue-rotate(60deg) saturate(200%)'
+                    }}
                   />
                 </div>
                 <h2 className="text-2xl font-bold text-gray-800 mb-4">Wallet Required</h2>
@@ -168,12 +168,10 @@ const Blog = () => {
                 onClick={connect}
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105 group"
               >
-                <InteractiveMetaMaskLogo 
-                  width={24}
-                  height={24}
-                  followMouse={false}
-                  slowDrift={true}
-                  className="mr-3 group-hover:scale-110 transition-transform"
+                <img 
+                  src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
+                  alt="MetaMask" 
+                  className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform"
                   style={{
                     filter: 'brightness(0) saturate(100%) invert(100%)'
                   }}

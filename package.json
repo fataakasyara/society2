@@ -14,8 +14,7 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.20.1",
     "sweetalert2": "^11.10.1",
-    "ethers": "^6.8.1",
-    "@metamask/logo": "^3.1.2"
+    "ethers": "^6.8.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
