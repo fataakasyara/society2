@@ -1,4 +1,4 @@
-# Nolyx Society - React Application
+# Nolyx Society #
 A modern Web3 community platform built with React, featuring MetaMask integration, blog system, and AI chatbot.
 
 ## 🚀 Features
