@@ -169,15 +169,7 @@ const Blog = () => {
                 onClick={connect}
                 className="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105 group"
               >
-                <img 
-                  src="https://images.ctfassets.net/clixtyxoaeas/4rnpEzy1ATWRKVBOLxZ1Fm/a74dc1eed36d23d7ea6030383a4d5163/MetaMask-icon-fox.svg" 
-                  alt="MetaMask" 
-                  className="w-6 h-6 mr-3 group-hover:scale-110 transition-transform"
-                  style={{
-                    filter: 'brightness(0) saturate(100%) invert(100%)'
-                  }}
-                />
-                Connect MetaMask Wallet
+                Connect MetaMask
               </button>
               
               <div className="mt-6 text-sm text-gray-500">
