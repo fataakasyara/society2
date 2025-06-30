@@ -44,7 +44,7 @@ const Post = () => {
   const loadPostsData = async () => {
     try {
       console.log('Loading posts data from API...')
-      const response = await fetch('https://api.jsonbin.io/v3/b/685bffd98561e97a502b9481')
+      const response = await fetch('https://api.jsonbin.io/v3/b/6860da6b8a456b7966b7bfb0')
 
       if (!response.ok) {
         throw new Error(`Failed to load posts data: ${response.status}`)
@@ -220,6 +220,63 @@ const Post = () => {
     
     // Fallback to copy link
     await copyLink()
+  }
+
+  // Render sections content based on new structure
+  const renderSectionContent = (section) => {
+    if (section.content) {
+      // Simple content section
+      return (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.heading}</h2>
+          <p className="text-gray-700 leading-relaxed">{section.content}</p>
+        </div>
+      )
+    }
+
+    if (section.points) {
+      // Points list section
+      return (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.heading}</h2>
+          <ol className="list-decimal list-inside space-y-2 text-gray-700">
+            {section.points.map((point, index) => (
+              <li key={index} className="leading-relaxed">{point}</li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+
+    if (section.bullets) {
+      // Bullet list section
+      return (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.heading}</h2>
+          <ul className="list-disc list-inside space-y-2 text-gray-700">
+            {section.bullets.map((bullet, index) => (
+              <li key={index} className="leading-relaxed">{bullet}</li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    if (section.steps) {
+      // Steps list section
+      return (
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4">{section.heading}</h2>
+          <ol className="list-decimal list-inside space-y-3 text-gray-700">
+            {section.steps.map((step, index) => (
+              <li key={index} className="leading-relaxed font-medium">{step}</li>
+            ))}
+          </ol>
+        </div>
+      )
+    }
+
+    return null
   }
 
   // Generate structured data for SEO
@@ -429,10 +486,12 @@ const Post = () => {
               {/* Main Content */}
               <article className="lg:col-span-8 article-content">
                 <div className="prose prose-lg prose-green max-w-none">
-                  <div 
-                    className="post-content"
-                    dangerouslySetInnerHTML={{ __html: currentPost.content }}
-                  />
+                  {/* Render sections based on new structure */}
+                  {currentPost.sections && currentPost.sections.map((section, index) => (
+                    <div key={index}>
+                      {renderSectionContent(section)}
+                    </div>
+                  ))}
                 </div>
 
                 {/* Author Bio */}
@@ -466,7 +525,7 @@ const Post = () => {
               {/* Sidebar */}
               <aside className="lg:col-span-4">
                 <div className="sticky top-24 space-y-8">
-                  {/* Share Article - Moved from top */}
+                  {/* Share Article */}
                   <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-6">
                     <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
                       <svg className="w-5 h-5 mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

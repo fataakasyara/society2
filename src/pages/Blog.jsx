@@ -55,7 +55,7 @@ const Blog = () => {
   const loadPostsData = async () => {
     try {
       console.log('Loading posts data from API...')
-      const response = await fetch('https://api.jsonbin.io/v3/b/685bffd98561e97a502b9481')
+      const response = await fetch('https://api.jsonbin.io/v3/b/6860da6b8a456b7966b7bfb0')
 
       if (!response.ok) {
         throw new Error(`Failed to load posts data: ${response.status}`)
