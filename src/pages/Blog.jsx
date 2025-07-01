@@ -33,6 +33,15 @@ const Blog = () => {
     'Crypto security'
   ]
 
+  // Mobile-friendly categories - curated selection
+  const mobileCategories = [
+    { id: 'all', name: 'All', icon: '🏠', color: 'bg-gray-500' },
+    { id: 'blockchain', name: 'Blockchain', icon: '⛓️', color: 'bg-blue-500' },
+    { id: 'defi', name: 'DeFi', icon: '💰', color: 'bg-purple-500' },
+    { id: 'nft', name: 'NFT', icon: '🎨', color: 'bg-pink-500' },
+    { id: 'tutorials', name: 'Learn', icon: '📚', color: 'bg-green-500' }
+  ]
+
   useEffect(() => {
     checkWalletConnection()
   }, [isConnected])
@@ -202,13 +211,62 @@ const Blog = () => {
       <section className="pt-20 pb-20 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Search Section */}
-          <div className="mb-12">
+          <div className="mb-8">
             <ModernSearchBar
               onSearch={handleSearch}
               suggestions={searchSuggestions}
               placeholder="Search articles, topics, or keywords..."
               showVoiceSearch={true}
             />
+          </div>
+
+          {/* Mobile Categories Section */}
+          <div className="lg:hidden mb-8">
+            <div className="bg-white bg-opacity-10 backdrop-filter backdrop-blur-sm rounded-2xl p-4 border border-white border-opacity-20">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-white font-semibold text-sm flex items-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="mr-2">
+                    <path d="M3 7V5a2 2 0 012-2h2"/>
+                    <path d="M17 3h2a2 2 0 012 2v2"/>
+                    <path d="M21 17v2a2 2 0 01-2 2h-2"/>
+                    <path d="M7 21H5a2 2 0 01-2-2v-2"/>
+                  </svg>
+                  Categories
+                </h3>
+                {currentCategory !== 'all' && (
+                  <button
+                    onClick={() => setCurrentCategory('all')}
+                    className="text-white text-xs opacity-75 hover:opacity-100 transition-opacity"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+              
+              {/* Horizontal Scrollable Categories */}
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+                {mobileCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => handleCategoryChange(category.id)}
+                    className={`flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                      currentCategory === category.id
+                        ? 'bg-white text-green-700 shadow-lg transform scale-105'
+                        : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30 hover:scale-105'
+                    }`}
+                    style={{ minWidth: 'fit-content' }}
+                  >
+                    <span className="text-base">{category.icon}</span>
+                    <span className="whitespace-nowrap">{category.name}</span>
+                    {currentCategory === category.id && (
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                        <polyline points="20,6 9,17 4,12"/>
+                      </svg>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           {/* Search Results Info */}
@@ -244,11 +302,13 @@ const Blog = () => {
 
           {/* Main Content Layout with Sidebar */}
           <div className="blog-layout">
-            {/* Category Sidebar */}
-            <CategorySidebar
-              currentCategory={currentCategory}
-              onCategoryChange={handleCategoryChange}
-            />
+            {/* Desktop Category Sidebar - Hidden on mobile */}
+            <div className="hidden lg:block">
+              <CategorySidebar
+                currentCategory={currentCategory}
+                onCategoryChange={handleCategoryChange}
+              />
+            </div>
 
             {/* Blog Posts Content */}
             <div className="blog-content">
@@ -268,7 +328,6 @@ const Blog = () => {
                           alt={post.title} 
                           className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110" 
                         />
-                        {/* Removed the overlay that was covering the image on hover */}
                         <div className="absolute top-4 left-4">
                           <span className="bg-green-600 text-white px-3 py-1 rounded-full text-sm font-semibold capitalize shadow-lg">
                             {formatCategoryName(post.category)}
