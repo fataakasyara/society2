@@ -340,36 +340,72 @@ const Post = () => {
 
   if (error || !currentPost) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        background: 'linear-gradient(135deg, #10b981, #059669)',
+        color: 'white',
+        fontFamily: 'sans-serif'
+      }}>
         <Navbar />
         
-        <main className="pt-20">
-          <div className="flex items-center justify-center min-h-screen">
-            <div className="max-w-md mx-auto px-4 text-center">
-              <div className="bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
-                <div className="mb-6">
-                  <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
-                    </svg>
-                  </div>
-                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Article Not Found</h2>
-                  <p className="text-gray-600 mb-6 leading-relaxed">
-                    The article you're looking for doesn't exist or has been removed.
-                  </p>
-                </div>
-                
-                <Link 
-                  to="/blog" 
-                  className="w-full bg-gradient-to-r from-green-600 to-emerald-500 hover:from-green-500 hover:to-emerald-400 text-white font-bold py-4 px-6 rounded-xl shadow-lg flex items-center justify-center transform transition-all duration-300 hover:scale-105 group"
-                >
-                  <svg className="w-5 h-5 mr-3 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                  </svg>
-                  Back to Blog
-                </Link>
-              </div>
-            </div>
+        <main style={{
+          flex: 1,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+          padding: '20px'
+        }}>
+          <div>
+            <h1 style={{ 
+              fontSize: '80px', 
+              margin: '0 0 20px 0',
+              fontWeight: 'bold'
+            }}>
+              📄
+            </h1>
+            
+            <h2 style={{ 
+              fontSize: '24px', 
+              margin: '0 0 10px 0',
+              fontWeight: '600'
+            }}>
+              Article Not Found
+            </h2>
+            
+            <p style={{ 
+              fontSize: '16px', 
+              margin: '0 0 40px 0',
+              opacity: '0.9'
+            }}>
+              The article you're looking for doesn't exist or has been removed.
+            </p>
+            
+            <Link 
+              to="/blog" 
+              style={{
+                background: 'white',
+                color: '#10b981',
+                padding: '12px 30px',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                fontSize: '16px',
+                fontWeight: '600',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = 'translateY(-2px)'
+                e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'translateY(0)'
+                e.target.style.boxShadow = 'none'
+              }}
+            >
+              Back to Blog
+            </Link>
           </div>
         </main>
       </div>
