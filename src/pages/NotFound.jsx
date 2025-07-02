@@ -4,41 +4,63 @@ import { Link } from 'react-router-dom'
 const NotFound = () => {
   return (
     <div style={{
-      textAlign: 'center',
-      fontFamily: 'sans-serif',
-      padding: '50px',
       minHeight: '100vh',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)'
+      background: 'linear-gradient(135deg, #10b981, #059669)',
+      color: 'white',
+      fontFamily: 'sans-serif',
+      textAlign: 'center',
+      padding: '20px'
     }}>
-      <h1 style={{ fontSize: '50px', color: '#333', marginBottom: '20px' }}>404</h1>
-      <p style={{ fontSize: '18px', color: '#666', marginBottom: '30px' }}>
-        Oops! This page doesn't exist
+      <h1 style={{ 
+        fontSize: '120px', 
+        margin: '0 0 20px 0',
+        fontWeight: 'bold'
+      }}>
+        404
+      </h1>
+      
+      <h2 style={{ 
+        fontSize: '24px', 
+        margin: '0 0 10px 0',
+        fontWeight: '600'
+      }}>
+        Page Not Found
+      </h2>
+      
+      <p style={{ 
+        fontSize: '16px', 
+        margin: '0 0 40px 0',
+        opacity: '0.9'
+      }}>
+        The page you're looking for doesn't exist.
       </p>
+      
       <Link 
         to="/" 
         style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-          color: 'white',
-          padding: '12px 24px',
+          background: 'white',
+          color: '#10b981',
+          padding: '12px 30px',
           textDecoration: 'none',
-          borderRadius: '25px',
+          borderRadius: '8px',
           fontSize: '16px',
           fontWeight: '600',
-          transition: 'transform 0.3s ease',
-          boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
+          transition: 'all 0.3s ease'
         }}
         onMouseEnter={(e) => {
           e.target.style.transform = 'translateY(-2px)'
+          e.target.style.boxShadow = '0 4px 12px rgba(0,0,0,0.2)'
         }}
         onMouseLeave={(e) => {
           e.target.style.transform = 'translateY(0)'
+          e.target.style.boxShadow = 'none'
         }}
       >
-        Back to Homepage
+        Back to Home
       </Link>
     </div>
   )
