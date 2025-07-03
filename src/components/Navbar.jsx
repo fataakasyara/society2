@@ -318,7 +318,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-4 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-lg">
+          <Link to="/" className="flex items-center space-x-4 outline-none">
             <img src="/gambar/nolyxnew.png" alt="Nolyx Logo" className="h-10 w-10" />
             <span id="cinzel" className="text-2xl font-bold text-green-700">Nolyx</span>
           </Link>
@@ -333,7 +333,7 @@ const Navbar = () => {
                 <button
                   key={index}
                   onClick={(e) => handleLinkClick(item, e)}
-                  className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group focus:outline-none focus:ring-2 focus:ring-green-500 rounded px-2 py-1`}
+                  className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group outline-none px-2 py-1`}
                   aria-current={isActive ? 'page' : undefined}
                 >
                   {item.text}
@@ -347,7 +347,7 @@ const Navbar = () => {
             {/* MetaMask Connection */}
             <button
               onClick={connect}
-              className={`font-medium transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 rounded px-2 py-1 ${
+              className={`font-medium transition-all duration-300 hover:scale-105 outline-none px-2 py-1 ${
                 isConnected 
                   ? 'text-green-600 font-semibold' 
                   : 'text-gray-700 hover:text-green-700'
@@ -367,7 +367,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="mobile-menu-button text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-green-500"
+              className="mobile-menu-button text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 outline-none"
               onClick={toggleMobileMenu}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
@@ -394,7 +394,7 @@ const Navbar = () => {
               <button
                 key={index}
                 onClick={(e) => handleLinkClick(item, e)}
-                className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${activeClass} focus:outline-none focus:ring-2 focus:ring-green-500`}
+                className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${activeClass} outline-none`}
                 aria-current={isActive ? 'page' : undefined}
               >
                 {item.text}
@@ -407,7 +407,7 @@ const Navbar = () => {
               connect()
               setIsMobileMenuOpen(false)
             }}
-            className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 ${
+            className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 outline-none ${
               isConnected 
                 ? 'text-green-600 font-semibold bg-green-50' 
                 : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
