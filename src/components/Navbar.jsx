@@ -318,7 +318,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-4 outline-none">
+          <Link to="/" className="flex items-center space-x-4" style={{ outline: 'none' }}>
             <img src="/gambar/nolyxnew.png" alt="Nolyx Logo" className="h-10 w-10" />
             <span id="cinzel" className="text-2xl font-bold text-green-700">Nolyx</span>
           </Link>
@@ -333,8 +333,10 @@ const Navbar = () => {
                 <button
                   key={index}
                   onClick={(e) => handleLinkClick(item, e)}
-                  className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group outline-none px-2 py-1`}
+                  className={`font-medium ${activeClass} transition-all duration-300 hover:scale-105 relative group px-2 py-1`}
                   aria-current={isActive ? 'page' : undefined}
+                  style={{ outline: 'none', border: 'none', background: 'none' }}
+                  onFocus={(e) => e.target.blur()}
                 >
                   {item.text}
                   <span className={`absolute -bottom-1 left-0 h-0.5 bg-green-600 transition-all duration-300 ${
@@ -347,12 +349,14 @@ const Navbar = () => {
             {/* MetaMask Connection */}
             <button
               onClick={connect}
-              className={`font-medium transition-all duration-300 hover:scale-105 outline-none px-2 py-1 ${
+              className={`font-medium transition-all duration-300 hover:scale-105 px-2 py-1 ${
                 isConnected 
                   ? 'text-green-600 font-semibold' 
                   : 'text-gray-700 hover:text-green-700'
               }`}
               aria-label={isConnected ? 'MetaMask Connected' : 'Connect MetaMask Wallet'}
+              style={{ outline: 'none', border: 'none', background: 'none' }}
+              onFocus={(e) => e.target.blur()}
             >
               {isConnected ? 'Connected' : 'Connect Metamask'}
             </button>
@@ -367,11 +371,13 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center">
             <button 
-              className="mobile-menu-button text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200 outline-none"
+              className="mobile-menu-button text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors duration-200"
               onClick={toggleMobileMenu}
               aria-expanded={isMobileMenuOpen}
               aria-controls="mobile-menu"
               aria-label="Toggle navigation menu"
+              style={{ outline: 'none', border: 'none' }}
+              onFocus={(e) => e.target.blur()}
             >
               <i className={`fas ${isMobileMenuOpen ? 'fa-times' : 'fa-bars'} text-xl transition-transform duration-200 ${isMobileMenuOpen ? 'rotate-180' : ''}`}></i>
             </button>
@@ -394,8 +400,10 @@ const Navbar = () => {
               <button
                 key={index}
                 onClick={(e) => handleLinkClick(item, e)}
-                className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${activeClass} outline-none`}
+                className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${activeClass}`}
                 aria-current={isActive ? 'page' : undefined}
+                style={{ outline: 'none', border: 'none' }}
+                onFocus={(e) => e.target.blur()}
               >
                 {item.text}
               </button>
@@ -407,12 +415,14 @@ const Navbar = () => {
               connect()
               setIsMobileMenuOpen(false)
             }}
-            className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 outline-none ${
+            className={`block w-full text-left py-3 px-3 rounded-lg transition-all duration-200 ${
               isConnected 
                 ? 'text-green-600 font-semibold bg-green-50' 
                 : 'text-gray-700 hover:text-green-700 hover:bg-gray-50'
             }`}
             aria-label={isConnected ? 'MetaMask Connected' : 'Connect MetaMask Wallet'}
+            style={{ outline: 'none', border: 'none' }}
+            onFocus={(e) => e.target.blur()}
           >
             {isConnected ? 'Connected' : 'Connect Metamask'}
           </button>
